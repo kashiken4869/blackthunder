@@ -1,10 +1,10 @@
 <?php
-$dsn = 'mysql:host=mysql;dbname=good_sns;charset=utf8;';
+$dsn = 'mysql:host=db;dbname=sns;charset=utf8;';
 $user = "root";
 $password = 'password';
 
 try {
-    $pdo = new PDO($dsn,$user,$password);
+    $pdo = new PDO($dsn, $user, $password);
     $msg = 'MySQLに接続成功！';
 } catch (PDOException $e) {
     $msg  = 'MySQLへの接続失敗...<br>' . $e->getMessage();
@@ -23,36 +23,24 @@ $stmt->execute();
 $replies = $stmt->fetchAll();
 
 ?>
+<?php
 
-<!DOCTYPE html>
-<html lang="ja">
+require('./parts/_header.php');
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="./style/reset.css">
-    <link rel="stylesheet" type="text/css" href="./style/style.css">
-    <script src="https://kit.fontawesome.com/92d415f0a8.js" crossorigin="anonymous"></script>
-    <title>Document</title>
-</head>
+?>
 
-<body>
-    <header>
-        <img src="./img/POSSElogo.jpeg" alt="" class="header_logo">
-        <h2>Good&New/想いの丈SNS</h2>
-    </header>
-    <div class="main">
-    <?php 
-        foreach($posts as $post):
-            ?>
-            <section class="post">
+
+<div class="main">
+    <?php
+    foreach ($posts as $post) :
+    ?>
+        <section class="post">
             <div class="post-header">
-                <img src="./img/<?= $post['image'];?>" alt="" class="post-header_logo">
-                <p class="post-header_title"><?= $post['name'] ;?><span>40m</span></p>
+                <img src="./img/<?= $post['image']; ?>" alt="" class="post-header_logo">
+                <p class="post-header_title"><?= $post['name']; ?><span>40m</span></p>
             </div>
             <div class="post-body">
-                <p><?= $post['content'] ;?></p>
+                <p><?= $post['content']; ?></p>
                 <a href="#">#Good&New</a>
             </div>
             <div class="post-items">
@@ -62,40 +50,45 @@ $replies = $stmt->fetchAll();
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
             </div>
         </section>
-        <?php
-        endforeach;
-        ?>
-            <?php 
-        foreach($replies as $reply):
-            ?>
+    <?php
+    endforeach;
+    ?>
+    <?php
+    foreach ($replies as $reply) :
+    ?>
         <section class="comment">
             <div class="comment-header">
-                <img src="./img/<?= $reply['image'] ;?>" alt="" class="comment-header_logo">
-                <p class="comment-header_title"><?= $reply['name'] ;?><span>30m</span></p>
+                <img src="./img/<?= $reply['image']; ?>" alt="" class="comment-header_logo">
+                <p class="comment-header_title"><?= $reply['name']; ?><span>30m</span></p>
             </div>
             <div class="comment-body">
-                <p><?= $reply['comment'] ;?></p>
+                <p><?= $reply['comment']; ?></p>
             </div>
         </section>
-        <?php
-        endforeach;
-        ?>
-    </div>
-    <div class="create">
-        <i class="fa-solid fa-plus"></i>
-    </div>
-    <div class="modal">
-        <i class="fa-solid fa-circle-xmark close"></i>
-        <form action="store.php" method="POST">
+    <?php
+    endforeach;
+    ?>
+</div>
+<div class="create">
+    <i class="fa-solid fa-plus"></i>
+</div>
+<div class="modal">
+    <i class="fa-solid fa-circle-xmark close"></i>
+    <form action="store.php" method="POST">
         <div class="modal-text" action="store.php" method="get">
             <img src="./img/karenicon.jpeg" alt="" class="post-header_logo">
-            <input type="hidden" name="id" value="<?= $id ;?>">
+            <input type="hidden" name="id" value="<?= $id; ?>">
             <textarea placeholder="ここに記入してください" name="comment"></textarea>
         </div>
         <button class="modal-button">記録・投稿</button>
-        </form>
-    </div>
-    <div class="blackFilm"></div>
-    <script src="./js/script.js"></script>
+    </form>
+</div>
+<div class="blackFilm"></div>
+<?php
+
+require('./parts/_footer.php');
+
+?>
 </body>
+
 </html>

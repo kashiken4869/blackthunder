@@ -1,6 +1,19 @@
 <?php
+$dsn = 'mysql:host=db;dbname=sns;charset=utf8;';
+$user = "root";
+$password = 'password';
 
-require('./parts/_header.php');
+try {
+    $pdo = new PDO($dsn, $user, $password);
+    $msg = 'MySQLに接続成功！';
+} catch (PDOException $e) {
+    $msg  = 'MySQLへの接続失敗...<br>' . $e->getMessage();
+}
+//すべての投稿取得
+$stmt = $pdo->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id WHERE users.id = 1");
+$stmt->execute();
+$posts = $stmt->fetchAll();
+
 
 $introduction = "2.0期生のかれんです。";
 
@@ -8,6 +21,11 @@ if (isset($_POST['iconImg'])) {
     $icon_karen_img = $_POST['iconImg'];
 }
 
+?>
+
+<?php
+
+require('./parts/_header.php');
 ?>
 
 <div class="main">
@@ -29,6 +47,41 @@ if (isset($_POST['iconImg'])) {
             <button class="modal-button">保存する</button>
         </form>
     </div>
+    <?php
+    foreach ($posts as $post) :
+        $id = $post['id'];
+        $stmt_reply = $pdo->prepare("SELECT count(*) FROM comments INNER JOIN posts on comments.post_id = posts.id INNER JOIN users on comments.user_id = users.id where posts.id = $id");
+        $stmt_reply->execute();
+        $replyCount = $stmt_reply->fetch();
+
+        //ベンチ数取得
+        $stmt_bench = $pdo->prepare("select count(*) from benches where post_id = '$id'");
+        $stmt_bench->execute();
+        $benchCount = $stmt_bench->fetch();
+    ?>
+        <section class="post">
+            <div class="post-header">
+                <img src="./img/<?= $post['image']; ?>" alt="" class="post-header_logo">
+                <p class="post-header_title"><?= $post['name']; ?><span>40m</span></p>
+            </div>
+            <div class="post-body">
+                <p><?= $post['content']; ?></p>
+                <a href="#">#Good&New</a>
+            </div>
+            <div class="post-items">
+                <form action="comment.php" method="post">
+                    <input type="hidden" value="<?= $post['id']; ?>" name="id">
+                    <input type="image" src="./img/iconmonstr-speech-bubble-comment-thin-240.png" class="commentIcon">
+                    <span><?= $replyCount['count(*)']; ?></span>
+                </form>
+                <button class="bench" data-post="<?= $post['id']; ?>"><i class="fa-solid fa-couch"></i><span class="count"><?= $benchCount['count(*)']; ?></span></button>
+                <button><i class="fa-solid fa-bookmark"></i></button>
+                <button><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+            </div>
+        </section>
+    <?php
+    endforeach;
+    ?>
     <section class="post">
         <div class="post-header">
             <img src=<?= $icon_karen_img ?> alt="" class="post-header_logo">

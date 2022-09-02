@@ -1,6 +1,8 @@
 <?php
+require($_SERVER['DOCUMENT_ROOT'] . "/db_connect.php");
+session_start();
 
-$dsn = 'mysql:host=mysql;dbname=good_sns;charset=utf8;';
+$dsn = 'mysql:host=db;dbname=sns;charset=utf8;';
 $user = "root";
 $password = 'password';
 
@@ -86,11 +88,21 @@ require('./parts/_header.php');
     </div>
     <div class="modal">
         <i class="fa-solid fa-circle-xmark close"></i>
-        <div class="modal-text">
-            <img src="./img/karenicon.jpeg" alt="" class="post-header_logo">
-            <textarea placeholder="ここに記入してください"></textarea>
-        </div>
-        <button class="modal-button">記録・投稿</button>
+        <form action="./index.php" method="post" class="modal-form">
+            <div class="post-header_logo_wrapper">
+                <img src=<?= $icon_karen_img ?> alt="" class="post-header_logo">
+                <div class="modal-text">
+                    <textarea name="postText" placeholder="ここに記入してください"></textarea>
+                    <div class="hashTag_wrapper">
+                        <select name="hashTag" class="hashTag">
+                            <option>#good&new</option>
+                            <option>#思いの丈</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="modal-button">投稿</button>
+        </form>
     </div>
     <div class="blackFilm"></div>
     <?php

@@ -1,4 +1,4 @@
-<?php 
+<?php
 require($_SERVER['DOCUMENT_ROOT'] . "/db_connect.php");
 session_start();
 
@@ -47,17 +47,17 @@ if (isset($_POST["submit"])) {
 
 <body>
     <header>
-    <h1>
-        <p><span>CRAFT</span>by boozer</p>
-    </h1>
-    <p class="agent_login">CRAFT管理者ログイン画面</p>
+        <h1>
+            <p><span>CRAFT</span>by boozer</p>
+        </h1>
+        <p class="agent_login">CRAFT管理者ログイン画面</p>
     </header>
     <div class="agent_login_info for_admin_login">
         <h2 class="agent_login_title">CRAFT管理者ログイン画面</h2>
         <form action="" method="post">
-        <?php if (isset($msg)) : ?>
-            <h3 class="pass_wrong"><?php echo $msg; ?></h3>
-        <?php endif; ?>
+            <?php if (isset($msg)) : ?>
+                <h3 class="pass_wrong"><?php echo $msg; ?></h3>
+            <?php endif; ?>
             <p class="agent_login_label">メールアドレス</p>
             <input type="text" name="email" required>
             <p class="agent_login_label">パスワード</p>
