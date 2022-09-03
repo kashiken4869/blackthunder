@@ -1,0 +1,391 @@
+@charset "UTF-8";
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100px;
+  background-color: rgb(166, 232, 234);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header .header_logo {
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  transform: translateY(-50%);
+  width: 10%;
+}
+header h2 {
+  font-size: 28px;
+}
+
+.main {
+  width: 60%;
+  margin: 150px auto;
+}
+
+.post {
+  padding: 20px 40px;
+  border: solid 1px #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
+  margin-top: 50px;
+}
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.post-header_logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.post-header_title {
+  font-size: 24px;
+}
+.post-header_title span {
+  font-size: 16px;
+  color: #ccc;
+  margin-left: 5px;
+}
+.post-body {
+  margin: 16px 0;
+}
+.post-items {
+  margin: 16px 0;
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+.post-items span {
+  font-size: 14px;
+  margin-left: 4px;
+}
+.post-items i {
+  color: #ccc;
+  cursor: pointer;
+  display: inline;
+}
+.post-items .commentIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.comment {
+  padding: 12px 40px;
+  border: solid 1px #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
+  background-color: rgb(240, 239, 239);
+}
+.comment-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.comment-header_logo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.comment-header_title {
+  font-size: 24px;
+}
+.comment-header_title span {
+  font-size: 16px;
+  color: #ccc;
+  margin-left: 5px;
+}
+.comment-body {
+  margin: 16px 0;
+}
+
+.create {
+  position: fixed;
+  bottom: 5%;
+  right: 5%;
+  width: 80px;
+  height: 80px;
+  background-color: rgb(64, 206, 211);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+.create i {
+  color: #fff;
+  font-size: 24px;
+}
+
+#profile {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 400px;
+  background-color: #fff;
+  display: none;
+  opacity: 0%;
+  z-index: 3;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+}
+#profile form {
+  width: 100%;
+  height: 100%;
+}
+#profile-text {
+  display: none;
+  z-index: 3;
+  padding: 40px;
+  border-radius: 20px;
+}
+#profile-text .post-header_logo_wrapper {
+  display: flex;
+  -moz-column-count: 2;
+       column-count: 2;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+#profile-text-text {
+  width: 80%;
+  padding: 4px;
+}
+#profile-text-text textarea {
+  width: 80%;
+  height: 100%;
+  padding: 4px;
+}
+#profile-text-text .hashTag_wrapper {
+  width: 103.5px;
+  margin-left: auto;
+}
+#profile-text-text .hashTag_wrapper .hashTag {
+  height: 30px;
+  padding: 4px;
+}
+#profile-text-button {
+  background-color: rgba(255, 166, 0, 0.72);
+  color: #fff;
+  margin-left: 180px;
+  padding: 20px 40px;
+  border-radius: 20px;
+}
+#profile-text .fa-circle-xmark {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+}
+
+.soft {
+  -webkit-animation-name: soft;
+          animation-name: soft;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@-webkit-keyframes soft {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+@keyframes soft {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+.blacker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.354);
+  z-index: 2;
+}
+
+.main {
+  margin-left: 30%;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  -moz-column-count: 2;
+       column-count: 2;
+  -moz-column-gap: 20px;
+       column-gap: 20px;
+}
+
+.side {
+  width: 30%;
+  margin-top: 300px;
+  position: fixed;
+}
+
+.icon-wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.icon-wrapper i {
+  font-size: 30px;
+}
+
+.icon-items {
+  margin: 20px auto;
+  cursor: pointer;
+}
+
+.edit-wrapper {
+  background-color: #D9D9D9;
+  border: solid 2px #8B8B8B;
+  border-radius: 18px;
+  display: flex;
+  width: 200px;
+  height: 36px;
+  margin: 0px 4px 0px auto;
+}
+.edit-wrapper .edit-button {
+  margin: auto;
+}
+
+.hide {
+  display: block;
+  z-index: 3;
+}
+
+.modal-form {
+  width: 100%;
+  height: 80%;
+}
+
+#filesend {
+  display: none; /* 本来のファイル選択フォームは非表示に */
+}
+
+.img_wrap:hover {
+  background-color: #d9d9dd;
+}
+.img_wrap:hover img:hover {
+  opacity: 0.8;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  background-color: #fff;
+  display: none;
+  opacity: 0%;
+  z-index: 3;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+}
+.modal form {
+  width: 100%;
+  height: 100%;
+}
+.modal-text {
+  display: flex;
+  height: 80%;
+}
+.modal-text textarea {
+  width: 80%;
+  height: 100%;
+  padding: 12px;
+}
+.modal-button {
+  background-color: rgba(255, 166, 0, 0.72);
+  color: #fff;
+  padding: 20px 40px;
+  border-radius: 20px;
+}
+.modal .fa-circle-xmark {
+  position: absolute;
+  top: 3%;
+  right: 3%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.soft {
+  -webkit-animation-name: soft;
+          animation-name: soft;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-timing-function: ease;
+          animation-timing-function: ease;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-direction: normal;
+          animation-direction: normal;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
+}
+
+@keyframes soft {
+  0% {
+    opacity: 0%;
+  }
+  50% {
+    opacity: 50%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+.blacker {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.354);
+  z-index: 2;
+}
+
+.benchOn {
+  color: orange !important;
+}/*# sourceMappingURL=style.css.map */
