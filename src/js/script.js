@@ -53,7 +53,6 @@ benches.forEach(function(bench){
 // })
 
 
-// ここからtomoaki
 // const user = document.getElementById('user');
 // const bench = document.getElementById('bench');
 // const home = document.getElementById('home');
@@ -65,24 +64,6 @@ benches.forEach(function(bench){
 // })
 // home.addEventListener("click",function(){ //TLページに飛ぶ
 //     window.location.href = './index.php';
-// })
-
-// const profile = document.getElementById('profile');
-// const closed = document.querySelector('.closed');
-// const editWrapper = document.querySelector(".edit-wrapper");
-// editWrapper.addEventListener("click",function(){
-//     profile.style.display = "block";   
-//     setTimeout(function(){
-//         profile.classList.add("soft");
-//         film.classList.add("blacker");
-//     },100)
-// })
-// closed.addEventListener("click",function(){
-//     profile.style.display = "none";
-//     setTimeout(function(){
-//         profile.classList.remove("soft");
-//         film.classList.remove("blacker");
-//     },100)
 // })
 // //introduction 画像の変更前プレビュー
 // document.getElementById("filesend").addEventListener('change', function(e) {
@@ -128,3 +109,18 @@ $(document).on('click', '.bench',function(e){
     });
   });
 })
+
+$(function(){
+    $("[name='iconImg']").on('change', function (e) {
+      
+      var reader = new FileReader();
+      
+      reader.onload = function (e) {
+          $("#preview").attr('src', e.target.result);
+      }
+  
+      reader.readAsDataURL(e.target.files[0]);   
+  
+    });
+  });
+

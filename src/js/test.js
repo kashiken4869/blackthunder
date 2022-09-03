@@ -1,25 +1,31 @@
-function get_param(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, "\\$&");
-    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
-        results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return false;
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
+// ここからtomoaki
+const user = document.getElementById('user');
+const bench = document.getElementById('bench');
+const home = document.getElementById('home');
+user.addEventListener("click",function(){ //個人のページに飛ぶ
+    window.location.href = './account.php';
+})
+bench.addEventListener("click",function(){ //ベンチページに飛ぶ
+    window.location.href = './bench.php';
+})
+home.addEventListener("click",function(){ //TLページに飛ぶ
+    window.location.href = './index.php';
+})
 
-$(function () {
-$(document).on('submit', '.favorite_count',function(e){
-    e.preventDefault();
-    $.ajax({
-        type: 'POST',
-        url: 'getData.php',
-        dataType: 'json',
-        data: { post_id: 2}
-    }).done(function(data){
-        $(".fa-couch").toggleClass("benchOn");
-    }).fail(function() {
-        $(".bench").toggleClass("benchOn");
-    });
-  });
+const profile = document.getElementById('profile');
+const closed = document.querySelector('.closed');
+const editWrapper = document.querySelector(".edit-wrapper");
+editWrapper.addEventListener("click",function(){
+    profile.style.display = "block";   
+    setTimeout(function(){
+        profile.classList.add("soft");
+        film.classList.add("blacker");
+    },100)
+})
+closed.addEventListener("click",function(){
+    profile.style.display = "none";
+    setTimeout(function(){
+        profile.classList.remove("soft");
+        film.classList.remove("blacker");
+    },100)
 })

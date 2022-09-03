@@ -65,13 +65,12 @@ require('./parts/_header.php');
     <div class="main">
         <?php
         foreach ($posts as $post) :
-            $id = $post['id'];
-            $stmt_reply = $db->prepare("SELECT count(*) FROM comments INNER JOIN posts on comments.post_id = posts.post_id INNER JOIN users on comments.user_id = users.id where posts.post_id = $id");
+            $post_id = $post['post_id'];
+            $stmt_reply = $db->prepare("SELECT count(*) FROM comments INNER JOIN posts on comments.post_id = posts.post_id INNER JOIN users on comments.user_id = users.id where posts.post_id = '$post_id'");
             $stmt_reply->execute();
             $replyCount = $stmt_reply->fetch();
-
             //ベンチ数取得
-            $stmt_bench = $db->prepare("select count(*) from benches where post_id = '$id'");
+            $stmt_bench = $db->prepare("select count(*) from benches where post_id = '$post_id'");
             $stmt_bench->execute();
             $benchCount = $stmt_bench->fetch();
         ?>
@@ -86,7 +85,7 @@ require('./parts/_header.php');
                 </div>
                 <div class="post-items">
                     <form action="comment.php" method="post">
-                        <input type="hidden">
+                        <input type="hidden" name="id" value="<?= $post['post_id'] ?>">
                         <input type="image" src="./img/iconmonstr-speech-bubble-comment-thin-240.png" class="commentIcon">
                         <span><?= $replyCount['count(*)']; ?></span>
                     </form>
@@ -99,7 +98,12 @@ require('./parts/_header.php');
                     </form>
                     <!-- <button class="bench" data-post="<?= $post['id']; ?>"><i class="fa-solid fa-couch"></i><span class="count"><?= $benchCount['count(*)'];?></span></button> -->
                     <button><i class="fa-solid fa-bookmark"></i></button>
-                    <button><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+                    <a
+  href="https://social-plugins.line.me/lineit/share"
+  target="_blank"
+  rel="nofollow noopener noreferrer"
+  ><button><i class="fa-solid fa-arrow-up-from-bracket"></i></button></a
+>
                 </div>
             </section>
         <?php

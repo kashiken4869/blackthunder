@@ -1,18 +1,44 @@
 <?php
-    require(dirname(__FILE__) . "/db_connect.php");
+// require(dirname(__FILE__) . "/db_connect.php");
+require($_SERVER['DOCUMENT_ROOT'] . '/db_connect.php');
+session_start();
 
-$id = $_POST['id'];
+isset($_POST['id']) ? $id = $_POST['id']: $id = $_SESSION['id'];
 
 //投稿取得
-$stmt_post = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where posts.id = $id");
+$stmt_post = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where posts.post_id = '$id'");
 $stmt_post->execute();
 $posts = $stmt_post->fetchAll();
 
 //コメント取得
-$stmt = $db->prepare("SELECT * FROM comments INNER JOIN posts on comments.post_id = posts.id INNER JOIN users on comments.user_id = users.id where posts.id = $id");
+$stmt = $db->prepare("SELECT * FROM comments INNER JOIN posts on comments.post_id = posts.post_id INNER JOIN users on comments.user_id = users.id where posts.post_id = '$id'");
 $stmt->execute();
 $replies = $stmt->fetchAll();
 
+function check_favolite_duplicate($user_id,$post_id){
+    $dsn = 'mysql:host=db;dbname=sns;charset=utf8mb4;';
+    $user = 'posse_user';
+    $password = 'password';
+    try {
+    $db = new PDO($dsn, $user, $password);
+      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+      $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);//追加した！
+    } catch (PDOException $e) {
+      echo '接続失敗: ' . $e->getMessage();
+      exit();
+    }
+    $sql = "SELECT *
+            FROM benches
+            WHERE user_id = :user_id AND post_id = :post_id";
+    $stmt = $db->prepare($sql);
+    $stmt->execute(array(':user_id' => $user_id ,
+                         ':post_id' => $post_id));
+    $favorite = $stmt->fetch();
+    return $favorite;
+}
+
+
+require('./parts/_header.php');
 ?>
 
 <!DOCTYPE html>
@@ -29,13 +55,12 @@ $replies = $stmt->fetchAll();
 </head>
 
 <body>
-    <header>
-        <img src="./img/POSSElogo.jpeg" alt="" class="header_logo">
-        <h2>Good&New/想いの丈SNS</h2>
-    </header>
     <div class="main">
     <?php 
         foreach($posts as $post):
+            $stmt_bench = $db->prepare("select count(*) from benches where post_id = '$id'");
+            $stmt_bench->execute();
+            $benchCount = $stmt_bench->fetch();
             ?>
             <section class="post">
             <div class="post-header">
@@ -48,7 +73,13 @@ $replies = $stmt->fetchAll();
             </div>
             <div class="post-items">
                 <i class="fa-solid fa-comment"></i>
-                <i class="fa-solid fa-couch"></i>
+                <form class="favorite_count" action="#" method="post">
+                        <button  name="favorite" class="favorite_btn">
+                            <input type="hidden" value="<?= $post['post_id']; ?>" name="post_id" class="postId">
+                            <i class="fa-solid fa-couch bench <?php if(check_favolite_duplicate($_SESSION['user_id'],$post['post_id'])): ?>benchOn<?php endif; ?>" data-post="<?= $post['post_id']; ?>"></i>
+                            <span class="count"><?= $benchCount['count(*)'];?></span>
+                        </button>
+                </form>
                 <i class="fa-solid fa-bookmark"></i>
                 <i class="fa-solid fa-arrow-up-from-bracket"></i>
             </div>
@@ -79,7 +110,7 @@ $replies = $stmt->fetchAll();
         <i class="fa-solid fa-circle-xmark close"></i>
         <form action="store.php" method="POST">
         <div class="modal-text" action="store.php" method="get">
-            <img src="./img/karenicon.jpeg" alt="" class="post-header_logo">
+        <img src="./img/<?= $_SESSION['image'] ;?>" alt="" class="post-header_logo">
             <input type="hidden" name="id" value="<?= $id ;?>">
             <textarea placeholder="ここに記入してください" name="comment"></textarea>
         </div>
@@ -87,6 +118,8 @@ $replies = $stmt->fetchAll();
         </form>
     </div>
     <div class="blackFilm"></div>
-    <script src="./js/script.js"></script>
+    <?php
+    require('./parts/_footer.php');
+    ?>
 </body>
 </html>
