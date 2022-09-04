@@ -4,7 +4,7 @@ require(dirname(__FILE__) . "/db_connect.php");
 $user_id = $_SESSION['user_id'];
 $date = date("Y-m-d");
 $comment = $_POST['comment'];
-$id = $_POST['id'];
+$id = $_POST['post_id'];
 
 $_SESSION['id'] = $id;
 //コメントinsert

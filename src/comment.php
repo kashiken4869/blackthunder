@@ -3,8 +3,10 @@
 require($_SERVER['DOCUMENT_ROOT'] . '/db_connect.php');
 session_start();
 
+// $id = $_POST['id'];
 isset($_POST['id']) ? $id = $_POST['id']: $id = $_SESSION['id'];
 
+echo $id;
 //投稿取得
 $stmt_post = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where posts.post_id = '$id'");
 $stmt_post->execute();
@@ -109,9 +111,9 @@ require('./parts/_header.php');
     <div class="modal">
         <i class="fa-solid fa-circle-xmark close"></i>
         <form action="store.php" method="POST">
-        <div class="modal-text" action="store.php" method="get">
+        <div class="modal-text">
         <img src="./img/<?= $_SESSION['image'] ;?>" alt="" class="post-header_logo">
-            <input type="hidden" name="id" value="<?= $id ;?>">
+            <input type="hidden" name="post_id" value="<?= $_POST['id'] ;?>">
             <textarea placeholder="ここに記入してください" name="comment"></textarea>
         </div>
         <button class="modal-button">記録・投稿</button>

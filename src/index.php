@@ -66,6 +66,7 @@ require('./parts/_header.php');
         <?php
         foreach ($posts as $post) :
             $post_id = $post['post_id'];
+            //コメント数取得
             $stmt_reply = $db->prepare("SELECT count(*) FROM comments INNER JOIN posts on comments.post_id = posts.post_id INNER JOIN users on comments.user_id = users.id where posts.post_id = '$post_id'");
             $stmt_reply->execute();
             $replyCount = $stmt_reply->fetch();
@@ -73,8 +74,22 @@ require('./parts/_header.php');
             $stmt_bench = $db->prepare("select count(*) from benches where post_id = '$post_id'");
             $stmt_bench->execute();
             $benchCount = $stmt_bench->fetch();
+
+            //ベンチ押したユーザー取得
+            $stmt_user = $db->prepare("SELECT * from benches INNER JOIN users on benches.user_id = users.id where post_id = '$post_id'");
+            $stmt_user->execute();
+            $benchUsers = $stmt_user->fetchAll();
         ?>
             <section class="post">
+                <div class="benchModal">
+                <p>ベンチに行きたいユーザー</p>
+                    <?php foreach ($benchUsers as $benchUser) : ?>
+                    <div class="post-header">
+                        <img src="./img/<?= $benchUser['image']; ?>" alt="" class="post-header_logo">
+                        <p class="post-header_title"><?= $benchUser['name']; ?></p>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
                 <div class="post-header">
                     <img src="./img/<?= $post['image']; ?>" alt="" class="post-header_logo">
                     <p class="post-header_title"><?= $post['name']; ?><span>40m</span></p>
@@ -93,17 +108,14 @@ require('./parts/_header.php');
                         <button  name="favorite" class="favorite_btn">
                             <input type="hidden" value="<?= $post['post_id']; ?>" name="post_id" class="postId">
                             <i class="fa-solid fa-couch bench <?php if(check_favolite_duplicate($_SESSION['user_id'],$post['post_id'])): ?>benchOn<?php endif; ?>" data-post="<?= $post['post_id']; ?>"></i>
-                            <span class="count"><?= $benchCount['count(*)'];?></span>
                         </button>
+                        <span class="count"><?= $benchCount['count(*)'];?></span>
                     </form>
                     <!-- <button class="bench" data-post="<?= $post['id']; ?>"><i class="fa-solid fa-couch"></i><span class="count"><?= $benchCount['count(*)'];?></span></button> -->
                     <button><i class="fa-solid fa-bookmark"></i></button>
-                    <a
-  href="https://social-plugins.line.me/lineit/share"
-  target="_blank"
-  rel="nofollow noopener noreferrer"
-  ><button><i class="fa-solid fa-arrow-up-from-bracket"></i></button></a
->
+  <a href="//timeline.line.me/social-plugin/share?text=<?= $post['content']?>" target="_blank" rel="nofollow noopener noreferrer">
+  <button><i class="fa-solid fa-arrow-up-from-bracket"></i></button>
+</a>
                 </div>
             </section>
         <?php

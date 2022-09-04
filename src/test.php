@@ -1,18 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<a
-  href="https://social-plugins.line.me/lineit/share"
-  target="_blank"
-  rel="nofollow noopener noreferrer"
-  >LINEで送る</a
->
-<script src="./js/script.js"></script>
-</body>
-</html>
+<?php
+date_default_timezone_set('Asia/Tokyo'); //日本のタイムゾーンに設定
+$from = strtotime("2022-09-04");  // 2016年元旦 (0時0分0秒)
+$to   = strtotime("now");         // 現在日時
+echo time_diff($from, $to);
+// 結果：32days 12:34:56
+
+//***************************************
+// 日時の差を計算
+//***************************************
+function time_diff($time_from, $time_to) 
+{
+    // 日時差を秒数で取得
+    $dif = $time_to - $time_from;
+    //分単位
+    // 時間単位の差
+    $dif_hour= date("H:i:s", $dif);
+    // 日付単位の差
+    $dif_days = (strtotime(date("Y-m-d", $dif))) / 86400;
+    if($dif_days > 0){
+        return "{$dif_days}日";
+    }else{
+        return "{$dif_hour}h";
+    }
+}

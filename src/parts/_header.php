@@ -1,6 +1,23 @@
 <?php
+session_start();
+$dsn = 'mysql:host=db;dbname=sns;charset=utf8mb4;';
+$user = 'posse_user';
+$password = 'password';
 
-$icon_karen_img = './img/karen.jpg';
+
+try {
+  $db = new PDO($dsn, $user, $password);
+  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);//追加した！
+} catch (PDOException $e) {
+  echo '接続失敗: ' . $e->getMessage();
+  exit();
+}
+$id = $_SESSION['user_id'];
+
+$stmt = $db->prepare("SELECT * FROM users where id = '$id'");
+$stmt->execute();
+$image = $stmt->fetch();
 
 ?>
 
@@ -21,6 +38,8 @@ $icon_karen_img = './img/karen.jpg';
     <header>
         <img src="./img/POSSElogo.jpeg" alt="" class="header_logo">
         <h2>Good&New/想いの丈SNS</h2>
+        <i class="fa-solid fa-sun sun"></i>
+        <i class="fa-solid fa-moon moon"></i>
     </header>
     <div class="wrapper">
         <div class="side">
@@ -28,6 +47,6 @@ $icon_karen_img = './img/karen.jpg';
                 <i id="home" class="fa-solid fa-house icon-items"></i>
                 <i id="bench" class="fa-solid fa-couch icon-items"></i>
                 <i id="user" class="fa-solid fa-user icon-items"></i>
-                <img src=./img/<?= $_SESSION['image'] ?> alt="" class="post-header_logo icon-items">
+                <img src=./img/<?= $image['image'] ?> alt="" class="post-header_logo icon-items">
             </div>
         </div>

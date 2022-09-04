@@ -1,40 +1,41 @@
 <?php
 session_start();
-require('./parts/_header.php');
 require(dirname(__FILE__) . "/db_connect.php");
 $user_id = $_SESSION['user_id'];
 
-if(!empty($_FILES)){
+// if(!empty($_FILES)){
 
-    // ファイル名を取得
-    $filename = $_FILES['iconImg']['name'];
+//     // ファイル名を取得
+//     $filename = $_FILES['iconImg']['name'];
     
-    //move_uploaded_file（第1引数：ファイル名,第2引数：格納後のディレクトリ/ファイル名）
-    // 第2引数に使う部分
-    $uploaded_path = './img/'.$filename;
-    //echo $uploaded_path.'<br>';
+//     //move_uploaded_file（第1引数：ファイル名,第2引数：格納後のディレクトリ/ファイル名）
+//     // 第2引数に使う部分
+//     $uploaded_path = './img/'.$filename;
+//     //echo $uploaded_path.'<br>';
     
-    $result = move_uploaded_file($_FILES['iconImg']['tmp_name'],$uploaded_path);
+//     $result = move_uploaded_file($_FILES['iconImg']['tmp_name'],$uploaded_path);
     
-    if($result){
-      $MSG = 'アップロード成功！ファイル名：'.$filename;
-      $img_path = $uploaded_path;
-    }else{
-      $MSG = 'アップロード失敗！エラーコード：'.$_FILES['iconImg']['error'];
-    }
+//     if($result){
+//       $MSG = 'アップロード成功！ファイル名：'.$filename;
+//       $img_path = $uploaded_path;
+//     }else{
+//       $MSG = 'アップロード失敗！エラーコード：'.$_FILES['iconImg']['error'];
+//     }
     
-    }else{
-      $MSG = '画像を選択してください';
-    }
-    //前の画像さ削除
-        // $stmt_before = $db->prepare("select image from users where id = '$user_id'");
-        // $stmt_before->execute();
-        // $beforeImage = $stmt_before->fetch();
-        // unlink('./img/'.$beforeImage['image']);
+//     }else{
+//       $MSG = '画像を選択してください';
+//     }
+//     if($filename){
+//     //前の画像さ削除
+//     // $stmt_before = $db->prepare("select image from users where id = '$user_id'");
+//     // $stmt_before->execute();
+//     // $beforeImage = $stmt_before->fetch();
+//     // unlink('./img/'.$beforeImage['image']);
+// //コメントinsert
+// $stmt = $db->prepare("UPDATE users SET introduce = '$introduce', image = '$filename' WHERE id = '$user_id'");
+// $stmt->execute();
+//     }
 
-    //コメントinsert
-    $stmt = $db->prepare("UPDATE users SET introduce = '$introduce', image = '$filename' WHERE id = '$user_id'");
-    $stmt->execute();
 
 
 $stmt = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where id = '$user_id'");
@@ -71,22 +72,23 @@ function check_favolite_duplicate($user_id,$post_id){
     return $favorite;
 }
 
-?>
+require('./parts/_header.php');
 
+?>
 <div class="main">
     <button class="edit-wrapper">
         <p class="edit-button">プロフィールを変更する</p>
     </button>
     <div id="profile">
         <i class="fa-solid fa-circle-xmark closed"></i>
-        <form action="account.php" method="post" class="modal-form" enctype="multipart/form-data">
+        <form action="update.php" method="post" class="modal-form" enctype="multipart/form-data">
             <div class="post-header_logo_wrapper">
                 <label class="post-header_logo img_wrap">
-                    <img src=./img/<?= $profile['image'] ?> alt="" id="preview" class="post-header_logo" title="画像を選択">
+                    <img src=./img/<?= $profile['image'] ;?> alt="" id="preview" class="post-header_logo" title="画像を選択">
                     <input type="file" name="iconImg" id="filesend" accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png">
                 </label>
                 <div class="modal-text">
-                    <textarea name="introduce" placeholder="自己紹介をしよう"><?= $profile['introduce'] ?></textarea>
+                    <textarea name="introduce" placeholder="自己紹介をしよう"><?= $profile['introduce'] ;?></textarea>
                 </div>
             </div>
             <input type="submit" class="modal-button" value="保存する"></input>

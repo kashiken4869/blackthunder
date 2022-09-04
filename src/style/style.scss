@@ -23,6 +23,23 @@ header {
     transform: translateY(-50%);
     width: 10%;
   }
+  & .sun{
+    position: absolute;
+    font-size: 32px;
+    color: orange;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+  }
+  & .moon{
+    position: absolute;
+    font-size: 32px;
+    color: rgba(226, 238, 59, 0.771);
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    display: none;
+  }
   & h2 {
     font-size: 28px;
   }
@@ -30,7 +47,7 @@ header {
 
 .main {
   width: 60%;
-  margin: $header_height auto;
+  margin: $header_height+$section_margin auto;
 }
 
 .post {
@@ -38,6 +55,13 @@ header {
   border: solid 1px #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
   margin-top: $section_margin;
+  background-color: #fff;
+  &:first-child{
+    margin-top: 0;
+  }
+  & .count{
+    cursor: pointer;
+  }
   &-header {
     display: flex;
     align-items: center;
@@ -66,6 +90,7 @@ header {
     justify-content: space-between;
     font-size: 20px;
     margin-bottom: 0;
+    align-items: center;
     & span{
       font-size: 14px;
       margin-left: 4px;
@@ -143,6 +168,15 @@ header {
   padding: 40px;
   border-radius: 20px;
   text-align: center;
+  & .post-header_logo_wrapper{
+    width: 100%;
+    height: 80%;
+  }
+  & textarea{
+      width: 100%;
+      // margin: 0 auto;
+      height: 80%;
+  }
   & form{
     width: 100%;
     height: 100%;
@@ -244,6 +278,7 @@ header {
 .icon-items{
   margin: 20px auto;
   cursor : pointer;
+  color: rgb(166, 232, 234);
 }
 .edit-wrapper{
   background-color: #D9D9D9;
@@ -345,4 +380,34 @@ header {
 
 .benchOn{
   color: orange!important;
+}
+
+.darkMode{
+  background-color: #2e2b2b;
+  color: #fff;
+  // box-shadow: 3px 3px 5px #fff;
+}
+
+.closed{
+  position: absolute;
+  top: 5%;
+  left: 90%;
+}
+
+
+.benchModal{
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  z-index: 3;
+  & > div{
+    margin: 20px 0;
+  }
 }

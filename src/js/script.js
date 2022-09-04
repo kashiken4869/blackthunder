@@ -124,3 +124,86 @@ $(function(){
     });
   });
 
+  const user = document.getElementById('user');
+  const bench = document.getElementById('bench');
+  const home = document.getElementById('home');
+  user.addEventListener("click",function(){ //個人のページに飛ぶ
+      window.location.href = './account.php';
+  })
+  bench.addEventListener("click",function(){ //ベンチページに飛ぶ
+      window.location.href = './bench.php';
+  })
+  home.addEventListener("click",function(){ //TLページに飛ぶ
+      window.location.href = './index.php';
+  })
+
+
+const sun = document.querySelector('.sun');
+const moon = document.querySelector('.moon');
+const posts = document.querySelectorAll('.post');
+let mode = localStorage.getItem('mode');
+sun.addEventListener("click",function(){
+        sun.style.display = 'none';
+        moon.style.display = "block"
+        // document.body.style.backgroundColor = "2e2b2b";
+        document.body.classList.add("darkMode");
+        posts.forEach(function(post){
+            post.classList.add("darkMode")
+    })
+})
+
+moon.addEventListener("click",function(){
+        moon.style.display = 'none';
+        sun.style.display = "block"
+        document.body.classList.remove("darkMode");
+        posts.forEach(function(post){
+            post.classList.remove("darkMode")
+    })
+})
+
+
+// if (mode === 'dark') {
+//     sun.style.display = 'none';
+//     moon.style.display = "block"
+//     // document.body.style.backgroundColor = "2e2b2b";
+//     document.body.classList.add("darkMode");
+//     posts.forEach(function(post){
+//         post.classList.add("darkMode")
+// })
+//   }
+
+//   if (mode === 'normal') {
+//     moon.style.display = 'none';
+//     sun.style.display = "block"
+//     document.body.classList.remove("darkMode");
+//     posts.forEach(function(post){
+//         post.classList.remove("darkMode")
+// })
+//   }
+
+// const body = document.querySelector('body');
+// const darkmodeBtn = document.getElementById('darkmodeBtn');
+
+
+// if (mode === 'dark') {
+//   body.classList.add('dark');
+// }
+
+// darkmodeBtn.addEventListener('click', () => {
+//   body.classList.toggle('dark');
+//   if (mode === 'normal') {
+//     localStorage.setItem('mode', 'dark');
+//     mode = 'dark';
+//   } else {
+//     localStorage.setItem('mode', 'normal');
+//     mode = 'normal';
+//   }
+// });
+const benchModal = document.querySelectorAll('.benchModal');
+counts.forEach((count) => {
+    count.addEventListener('click', () => {
+        let number = [...counts].indexOf(count);
+        [...benchModal][number].style.display = 'block';
+        film.classList.add("blacker");
+    })
+})
