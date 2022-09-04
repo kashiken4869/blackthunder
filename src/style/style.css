@@ -2,52 +2,78 @@
 header {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100px;
-  background-color: rgb(166, 232, 234);
+  left: 23%;
+  width: 270px;
+  height: 100vh;
+  border-left: 1px solid gray;
+  /* background-color: rgb(166, 232, 234); */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
 }
 header .header_logo {
   position: absolute;
-  top: 50%;
-  left: 5%;
-  transform: translateY(-50%);
-  width: 10%;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
 }
 header .sun {
   position: absolute;
   font-size: 32px;
   color: orange;
-  top: 50%;
-  right: 5%;
-  transform: translateY(-50%);
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 header .moon {
   position: absolute;
   font-size: 32px;
   color: rgba(226, 238, 59, 0.771);
-  top: 50%;
-  right: 5%;
-  transform: translateY(-50%);
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
   display: none;
 }
 header h2 {
   font-size: 28px;
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+}
+
+header div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+}
+
+header a {
+  position: absolute;
+  font-size: 32px;
+  bottom: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-size: 20px;
 }
 
 .main {
-  width: 60%;
-  margin: 150px auto;
+  width: 45%;
+  margin: 0px auto;
+  padding-left: 150px;
 }
 
 .post {
   padding: 20px 40px;
   border: solid 1px #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
-  margin-top: 50px;
+  /* margin-top: 50px; */
   background-color: #fff;
 }
 .post:first-child {
@@ -70,17 +96,34 @@ header h2 {
 }
 .post-header_title {
   font-size: 24px;
+  margin-left: 15px;
 }
 .post-header_title span {
   font-size: 16px;
   color: #ccc;
   margin-left: 5px;
 }
+
 .post-body {
-  margin: 16px 0;
+  margin: 0 110px 16px 110px;
 }
+
+.post-body p {
+  /* border: 1px solid gray;
+  padding: 10px;
+  border-radius: 10px; */
+  margin: 10px 0;
+}
+
+.post-body a {
+  color: black;
+}
+
+
 .post-items {
-  margin: 16px 0;
+  width: 60%;
+  margin: 0px auto 16px 110px;
+  /* padding: 0 30px; */
   display: flex;
   justify-content: space-between;
   font-size: 20px;
@@ -134,7 +177,7 @@ header h2 {
 .create {
   position: fixed;
   bottom: 5%;
-  right: 5%;
+  right: 15%;
   width: 80px;
   height: 80px;
   background-color: rgb(64, 206, 211);
@@ -144,7 +187,7 @@ header h2 {
   align-items: center;
   cursor: pointer;
 }
-.create i {
+.create p {
   color: #fff;
   font-size: 24px;
 }
@@ -285,17 +328,23 @@ header h2 {
 }
 
 .side {
-  width: 30%;
-  margin-top: 300px;
+  /* width: 26%;
+  justify-content: flex-end;
+  display: flex; */
+  /* margin-top: 300px; */
   position: fixed;
+  top: 30%;
+  right: 21%;
 }
 
 .icon-wrapper {
+  z-index: 100000;
   display: flex;
   flex-direction: column;
   padding: 20px;
 }
 .icon-wrapper i {
+  color: black;
   font-size: 30px;
 }
 
@@ -426,7 +475,7 @@ header h2 {
 
 .darkMode {
   background-color: #2e2b2b;
-  color: #fff;
+  color: #fff !important;
 }
 
 .closed {

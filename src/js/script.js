@@ -140,6 +140,8 @@ $(function(){
 
 const sun = document.querySelector('.sun');
 const moon = document.querySelector('.moon');
+const headers = document.querySelectorAll('header h2');
+const icons = document.querySelectorAll('.icon-items');
 const posts = document.querySelectorAll('.post');
 let mode = localStorage.getItem('mode');
 sun.addEventListener("click",function(){
@@ -147,8 +149,14 @@ sun.addEventListener("click",function(){
         moon.style.display = "block"
         // document.body.style.backgroundColor = "2e2b2b";
         document.body.classList.add("darkMode");
+        headers.forEach(function(header){
+            header.classList.add("darkMode")
+    })
         posts.forEach(function(post){
             post.classList.add("darkMode")
+    })
+        icons.forEach(function(icon){
+            icon.classList.add("darkMode");
     })
 })
 
@@ -156,8 +164,14 @@ moon.addEventListener("click",function(){
         moon.style.display = 'none';
         sun.style.display = "block"
         document.body.classList.remove("darkMode");
+        headers.forEach(function(header){
+            header.classList.remove("darkMode")
+    })
         posts.forEach(function(post){
             post.classList.remove("darkMode")
+    })
+        icons.forEach(function(icon){
+            icon.classList.remove("darkMode");
     })
 })
 

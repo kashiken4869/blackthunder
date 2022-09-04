@@ -4,9 +4,9 @@ require($_SERVER['DOCUMENT_ROOT'] . '/db_connect.php');
 session_start();
 
 // $id = $_POST['id'];
-isset($_POST['id']) ? $id = $_POST['id']: $id = $_SESSION['id'];
+isset($_POST['id']) ? $id = $_POST['id'] : $id = $_SESSION['id'];
 
-echo $id;
+// echo $id;
 //投稿取得
 $stmt_post = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where posts.post_id = '$id'");
 $stmt_post->execute();
@@ -17,24 +17,27 @@ $stmt = $db->prepare("SELECT * FROM comments INNER JOIN posts on comments.post_i
 $stmt->execute();
 $replies = $stmt->fetchAll();
 
-function check_favolite_duplicate($user_id,$post_id){
-    $dsn = 'mysql:host=db;dbname=sns;charset=utf8mb4;';
+function check_favolite_duplicate($user_id, $post_id)
+{
+    $dsn = "mysql:host=db;dbname=sns;charset=utf8mb4;";
     $user = 'posse_user';
     $password = 'password';
     try {
-    $db = new PDO($dsn, $user, $password);
-      $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-      $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);//追加した！
+        $db = new PDO($dsn, $user, $password);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); //追加した！
     } catch (PDOException $e) {
-      echo '接続失敗: ' . $e->getMessage();
-      exit();
+        echo '接続失敗: ' . $e->getMessage();
+        exit();
     }
     $sql = "SELECT *
             FROM benches
             WHERE user_id = :user_id AND post_id = :post_id";
     $stmt = $db->prepare($sql);
-    $stmt->execute(array(':user_id' => $user_id ,
-                         ':post_id' => $post_id));
+    $stmt->execute(array(
+        ':user_id' => $user_id,
+        ':post_id' => $post_id
+    ));
     $favorite = $stmt->fetch();
     return $favorite;
 }
@@ -58,65 +61,65 @@ require('./parts/_header.php');
 
 <body>
     <div class="main">
-    <?php 
-        foreach($posts as $post):
+        <?php
+        foreach ($posts as $post) :
             $stmt_bench = $db->prepare("select count(*) from benches where post_id = '$id'");
             $stmt_bench->execute();
             $benchCount = $stmt_bench->fetch();
-            ?>
+        ?>
             <section class="post">
-            <div class="post-header">
-                <img src="./img/<?= $post['image'];?>" alt="" class="post-header_logo">
-                <p class="post-header_title"><?= $post['name'] ;?><span>40m</span></p>
-            </div>
-            <div class="post-body">
-                <p><?= $post['content'] ;?></p>
-                <a href="#">#Good&New</a>
-            </div>
-            <div class="post-items">
-                <i class="fa-solid fa-comment"></i>
-                <form class="favorite_count" action="#" method="post">
-                        <button  name="favorite" class="favorite_btn">
+                <div class="post-header">
+                    <img src="./img/<?= $post['image']; ?>" alt="" class="post-header_logo">
+                    <p class="post-header_title"><?= $post['name']; ?><span>40m</span></p>
+                </div>
+                <div class="post-body">
+                    <p><?= $post['content']; ?></p>
+                    <a href="#">#Good&New</a>
+                </div>
+                <div class="post-items">
+                    <i class="fa-solid fa-comment"></i>
+                    <form class="favorite_count" action="#" method="post">
+                        <button name="favorite" class="favorite_btn">
                             <input type="hidden" value="<?= $post['post_id']; ?>" name="post_id" class="postId">
-                            <i class="fa-solid fa-couch bench <?php if(check_favolite_duplicate($_SESSION['user_id'],$post['post_id'])): ?>benchOn<?php endif; ?>" data-post="<?= $post['post_id']; ?>"></i>
-                            <span class="count"><?= $benchCount['count(*)'];?></span>
+                            <i class="fa-solid fa-couch bench <?php if (check_favolite_duplicate($_SESSION['user_id'], $post['post_id'])) : ?>benchOn<?php endif; ?>" data-post="<?= $post['post_id']; ?>"></i>
+                            <span class="count"><?= $benchCount['count(*)']; ?></span>
                         </button>
-                </form>
-                <i class="fa-solid fa-bookmark"></i>
-                <i class="fa-solid fa-arrow-up-from-bracket"></i>
-            </div>
-        </section>
+                    </form>
+                    <i class="fa-solid fa-bookmark"></i>
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                </div>
+            </section>
         <?php
         endforeach;
         ?>
-            <?php 
-        foreach($replies as $reply):
-            ?>
-        <section class="comment">
-            <div class="comment-header">
-                <img src="./img/<?= $reply['image'] ;?>" alt="" class="comment-header_logo">
-                <p class="comment-header_title"><?= $reply['name'] ;?><span>30m</span></p>
-            </div>
-            <div class="comment-body">
-                <p><?= $reply['comment'] ;?></p>
-            </div>
-        </section>
+        <?php
+        foreach ($replies as $reply) :
+        ?>
+            <section class="comment">
+                <div class="comment-header">
+                    <img src="./img/<?= $reply['image']; ?>" alt="" class="comment-header_logo">
+                    <p class="comment-header_title"><?= $reply['name']; ?><span>30m</span></p>
+                </div>
+                <div class="comment-body">
+                    <p><?= $reply['comment']; ?></p>
+                </div>
+            </section>
         <?php
         endforeach;
         ?>
     </div>
     <div class="create">
-        <i class="fa-solid fa-plus"></i>
+        <p class="fa-solid fa-plus">叫ぶ</p>
     </div>
     <div class="modal">
         <i class="fa-solid fa-circle-xmark close"></i>
         <form action="store.php" method="POST">
-        <div class="modal-text">
-        <img src="./img/<?= $_SESSION['image'] ;?>" alt="" class="post-header_logo">
-            <input type="hidden" name="post_id" value="<?= $_POST['id'] ;?>">
-            <textarea placeholder="ここに記入してください" name="comment"></textarea>
-        </div>
-        <button class="modal-button">記録・投稿</button>
+            <div class="modal-text">
+                <img src="./img/<?= $_SESSION['image']; ?>" alt="" class="post-header_logo">
+                <input type="hidden" name="post_id" value="<?= $_POST['id']; ?>">
+                <textarea placeholder="ここに記入してください" name="comment"></textarea>
+            </div>
+            <button class="modal-button">記録・投稿</button>
         </form>
     </div>
     <div class="blackFilm"></div>
@@ -124,4 +127,5 @@ require('./parts/_header.php');
     require('./parts/_footer.php');
     ?>
 </body>
+
 </html>
