@@ -155,3 +155,10 @@ VALUES (NULL, '1', '2', '小野カン酒飲むな', '2022-09-02 06:48:25.000000'
 (NULL, '1', '3', 'おのかん酒飲むな！', '2022-09-02 06:48:25.000000'), 
 (NULL, '3', '5', '僕も食べたい！', '2022-09-02 06:48:25.000000'), 
 (NULL, '2', '1', 'やっぱmac book proだよね', '2022-09-02 06:48:25.000000');
+
+DROP TABLE IF EXISTS tags;
+CREATE TABLE `tags` (
+  `id` INT NOT NULL AUTO_INCREMENT , 
+  `tag_name` TEXT NOT NULL , 
+  `created_at` TIMESTAMP NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;

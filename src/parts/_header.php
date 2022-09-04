@@ -6,18 +6,22 @@ $password = 'password';
 
 
 try {
-  $db = new PDO($dsn, $user, $password);
-  $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-  $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);//追加した！
+    $db = new PDO($dsn, $user, $password);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false); //追加した！
 } catch (PDOException $e) {
-  echo '接続失敗: ' . $e->getMessage();
-  exit();
+    echo '接続失敗: ' . $e->getMessage();
+    exit();
 }
 $id = $_SESSION['user_id'];
 
 $stmt = $db->prepare("SELECT * FROM users where id = '$id'");
 $stmt->execute();
 $image = $stmt->fetch();
+
+$stmt = $db->prepare("SELECT * FROM tags");
+$stmt->execute();
+$tags = $stmt->fetchAll();
 
 ?>
 
@@ -30,20 +34,26 @@ $image = $stmt->fetch();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./style/reset.css">
     <link rel="stylesheet" type="text/css" href="./style/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/92d415f0a8.js" crossorigin="anonymous"></script>
     <title>Document</title>
 </head>
 
 <body>
     <header>
-        <img src="./img/POSSElogo.jpeg" alt="" class="header_logo">
-        <h2>Good&New/想いの丈SNS</h2>
+        <h2>MidNight</h2>
         <i class="fa-solid fa-sun sun"></i>
         <i class="fa-solid fa-moon moon"></i>
     </header>
     <div class="wrapper">
         <div class="side">
             <div class="icon-wrapper">
+                <form action="index.php" method="post">
+                    <select name="tag" id="tag" onchange="submit(this.form)">
+                    </select>
+                </form>
                 <i id="home" class="fa-solid fa-house icon-items"></i>
                 <i id="bench" class="fa-solid fa-couch icon-items"></i>
                 <i id="user" class="fa-solid fa-user icon-items"></i>

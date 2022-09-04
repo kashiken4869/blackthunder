@@ -9,6 +9,8 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
+  font-family: "Lobster", cursive;
 }
 header .header_logo {
   position: absolute;
@@ -35,7 +37,7 @@ header .moon {
   display: none;
 }
 header h2 {
-  font-size: 28px;
+  font-size: 40px;
 }
 
 .main {
@@ -49,6 +51,7 @@ header h2 {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
   margin-top: 50px;
   background-color: #fff;
+  position: relative;
 }
 .post:first-child {
   margin-top: 0;
@@ -283,6 +286,10 @@ header h2 {
   -moz-column-gap: 20px;
        column-gap: 20px;
 }
+.wrapper select {
+  width: 100%;
+  text-align: center;
+}
 
 .side {
   width: 30%;
@@ -450,4 +457,12 @@ header h2 {
 }
 .benchModal > div {
   margin: 20px 0;
+}
+
+.trash {
+  position: absolute;
+  top: 5%;
+  left: 90%;
+  width: 15px;
+  height: 15px;
 }/*# sourceMappingURL=style.css.map */
