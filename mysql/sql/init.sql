@@ -163,20 +163,20 @@ CREATE TABLE `tags` (
   `created_at` TIMESTAMP NOT NULL , 
   PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS chat_room_user;
-  CREATE TABLE `sns`.`chat_room_user` (
-    `id` INT NOT NULL AUTO_INCREMENT , 
-    `user_id` INT NOT NULL , 
-    `chat_room_id` INT NOT NULL , 
-    PRIMARY KEY (`id`)) ENGINE = InnoDB;
+INSERT INTO `tags` (`id`, `tag_name`) 
+VALUES (NULL, 'Good&New'), 
+(NULL, '想いの丈',), 
 
-DROP TABLE IF EXISTS chat_room;
-  CREATE TABLE `sns`.`chat_room` (`id` INT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `rooms` (
+  `id` INT NOT NULL AUTO_INCREMENT , 
+  `user_id` INT NOT NULL , 
+  `partner_id` INT NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
 
-DROP TABLE IF EXISTS chat_message;
-  CREATE TABLE `sns`.`chat_message` (
-    `id` INT NOT NULL AUTO_INCREMENT ,
-     `chat_room_id` INT NOT NULL ,
-      `user_id` INT NOT NULL , 
-      `message` TEXT NOT NULL , 
-      `created_at` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `messages` (
+  `id` INT NOT NULL AUTO_INCREMENT , 
+  `room_id` INT NOT NULL , 
+  `send_user_id` INT NOT NULL , 
+  `text` TEXT NOT NULL,
+  `created_at` datetime NOT NULL
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
