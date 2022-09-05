@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 require(dirname(__FILE__) . "/db_connect.php");
 if (isset($_GET['btn_logout'])) {
