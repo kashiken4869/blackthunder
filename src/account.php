@@ -2,12 +2,14 @@
 session_start();
 require(dirname(__FILE__) . "/db_connect.php");
 $user_id = $_SESSION['user_id'];
+$search_id = $_POST['search_id'];
 
-$stmt = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where id = '$user_id'");
+
+$stmt = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where id = '$search_id'");
 $stmt->execute();
 $posts = $stmt->fetchAll();
 
-$stmt = $db->prepare("SELECT * FROM users where id = '$user_id'");
+$stmt = $db->prepare("SELECT * FROM users where id = '$search_id'");
 $stmt->execute();
 $profile = $stmt->fetch();
 
@@ -42,7 +44,11 @@ require('./parts/_header.php');
 ?>
 <div class="main">
     <button class="edit-wrapper">
-        <p class="edit-button">プロフィールを変更する</p>
+        <?php if($search_id == $user_id) : ?>
+            <p class="edit-button">プロフィールを変更する</p>
+        <?php else : ?>
+            <p class="edit-button">プロフィールを見る</p>            
+        <?php endif; ?>
     </button>
     <div id="profile">
         <i class="fa-solid fa-circle-xmark closed"></i>
@@ -50,13 +56,13 @@ require('./parts/_header.php');
             <div class="post-header_logo_wrapper">
                 <label class="post-header_logo img_wrap">
                     <img src=./img/<?= $profile['image'] ;?> alt="" id="preview" class="post-header_logo" title="画像を選択">
-                    <input type="file" name="iconImg" id="filesend" accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png">
+                    <input type="file" name="iconImg" id="filesend" accept=".jpg,.gif,.png,image/gif,image/jpeg,image/png" <?php if($search_id !== $user_id): ?>disabled<?php endif; ?>>
                 </label>
                 <div class="modal-text">
-                    <textarea name="introduce" placeholder="自己紹介をしよう"><?= $profile['introduce'] ;?></textarea>
+                    <textarea name="introduce" placeholder="自己紹介をしよう" <?php if($search_id !== $user_id): ?>disabled<?php endif; ?>><?= $profile['introduce'] ;?></textarea>
                 </div>
             </div>
-            <input type="submit" class="modal-button" value="保存する"></input>
+            <input type="submit" class="modal-button" value="保存する" <?php if($search_id !== $user_id): ?>disabled<?php endif; ?>>
         </form>
     </div>
     <?php
@@ -88,7 +94,7 @@ require('./parts/_header.php');
                     <form class="favorite_count" action="#" method="post">
                         <button  name="favorite" class="favorite_btn">
                             <input type="hidden" value="<?= $post['post_id']; ?>" name="post_id" class="postId">
-                            <i class="fa-solid fa-couch bench <?php if(check_favolite_duplicate($_SESSION['user_id'],$post['post_id'])): ?>benchOn<?php endif; ?>" data-post="<?= $post['post_id']; ?>"></i>
+                            <i class="fa-solid fa-couch bench <?php if(check_favolite_duplicate($search_id,$post['post_id'])): ?>benchOn<?php endif; ?>" data-post="<?= $post['post_id']; ?>"></i>
                             <span class="count"><?= $benchCount['count(*)'];?></span>
                         </button>
                     </form>

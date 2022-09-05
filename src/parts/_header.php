@@ -4,7 +4,6 @@ $dsn = 'mysql:host=db;dbname=sns;charset=utf8mb4;';
 $user = 'posse_user';
 $password = 'password';
 
-
 try {
     $db = new PDO($dsn, $user, $password);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -23,6 +22,7 @@ $stmt = $db->prepare("SELECT * FROM tags");
 $stmt->execute();
 $tags = $stmt->fetchAll();
 
+echo $user_id;
 ?>
 
 <!DOCTYPE html>
@@ -50,6 +50,13 @@ $tags = $stmt->fetchAll();
     <div class="wrapper">
         <div class="side">
             <div class="icon-wrapper">
+                <div class="open-btn1"></div>
+                <div id="search-wrap">
+                    <form role="search" method="post" id="searchform" action="" action="index.php">
+                        <input type="text" value="" name="search" id="search-text" placeholder="search">
+                        <input type="submit" id="searchsubmit" value="">
+                    </form>
+                </div>
                 <form action="index.php" method="post">
                     <select name="tag" id="tag" onchange="submit(this.form)">
                     </select>
@@ -58,6 +65,9 @@ $tags = $stmt->fetchAll();
                 <a href="bench.php"><i id="bench" class="fa-solid fa-couch icon-items"></i></a>
                 <!-- <i id="user" class="fa-solid fa-user icon-items"></i> -->
                 <a href="dm.php"><i class="fa-solid fa-envelope icon-items"></i></a>
-                <a href="account.php"><img src=./img/<?= $image['image'] ?> alt="" class="post-header_logo icon-items"></a>
+                <form action="account.php" method="post">
+                    <input type="hidden" name="search_id" value="<?= $user_id ;?>">
+                    <input type="image" src=./img/<?= $image['image'] ?> alt="" class="post-header_logo icon-items">
+                </form>
             </div>
         </div>
