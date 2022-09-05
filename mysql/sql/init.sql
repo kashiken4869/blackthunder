@@ -90,3 +90,93 @@ INSERT INTO `agents` (`id`, `corporate_name`, `insert_company_name`, `started_at
 (68, 'Goodfindエージェント株式会社', 'Goodfind', '2022-05-28', '2022-06-11', 'goodfind@goodfind', '$2y$10$99pe1yJwvsOfT4pRbjGg1eZCJLdU0jh1zzSoVz0XMy5jBzOfAf/4.', 'good@good', 1000, 1000, 'goodfing-sun', '営業部', 'goodfind@sun', '3451', '20220529085804_2e7a276ffc67a456ff2bc06d75c0d2a0.png', 'ベンチャー企業の取扱企業数は日本一！', 'セミナーのレベルが非常に高く大好評', '徹底した面談サポートにより、内定率88%', '5600', 1),
 (69, 'ツイング株式会社', 'ツイング', '2022-05-28', '2022-06-11', 'twing@twing', '$2y$10$b5EZDclmkV8P6EjXTeqeweG53hYfQe0ZKOkzUtdjtypjTEAYA5fhi', 'twing@a', 1000, 1000, 'twing-sun', '営業部', 'twing@sun', '22222', '20220529090317_og.png', '大手企業の元人事からES添削サポートあり', '相談回数は無制限！即返答！', '1 on 1の手厚い面接サポートあり', '8000', 1),
 (70, 'duda株式会社', 'duda新卒エージェント', '2022-05-28', '2022-06-11', 'duda@duda', '$2y$10$OJFzz49XhwS//4LInbKOUeLb.5pYVgYYfzL/CCb9vxJhFQdIYDjIe', 'du@du', 1000, 5000, 'duda-sun', '営業部', 'duda@sun', '3233', '20220529091423_images.png', '選考のフィードバックがもらえる', '初回から専任のコンサルタントと1時間じっくり面談', 'ES添削、面接サポート受け放題！', '7500', 1);
+
+DROP TABLE IF EXISTS users;
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(45) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `birthday` date NOT NULL,
+  `introduce` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `image`, `birthday`, `introduce`, `created_at`) 
+VALUES (NULL, 'おのかンかん', 'kanta@gmail.com', 'onokan', 'onokan.jpg', '2022-07-05', '小野かんです', '2022-09-02 06:37:16.000000'), 
+(NULL, 'プレゼン女王', 'kyomu@gmail.com', 'purezen', 'kyomu.jpg', '2022-09-23', 'プレゼンんしか勝たん。岩村さん推しです', '2022-09-02 06:37:16.000000'), 
+(NULL, 'ponta', 'ponta@gmail.com', 'ponta', 'ponta.jpg', '2022-10-09', 'ポンタです', '2022-09-02 06:37:16.000000'), 
+(NULL, 'レンちゃん', 'karen@gmail.com', 'karen', 'karen.jpg', '2022-08-12', 'どうも可憐でーす', '2022-09-02 06:37:16.000000'), 
+(NULL, '菓子けん', 'kashiken@gmail.com', 'kashiken', 'kashiken.jpg', '2022-05-13', '過試験です', '2022-09-02 06:37:16.000000'), 
+(NULL, 'ともちゃん', 'tomo@gmail.com', 'tomotomo', 'tomo.jpg', '2023-01-12', 'ともあきんぐ', '2022-09-02 06:37:16.000000');
+
+
+DROP TABLE IF EXISTS posts;
+CREATE TABLE `posts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `tag_id` int NOT NULL,
+  `content` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `posts` (`id`, `user_id`, `tag_id`, `content`, `created_at`) 
+VALUES (NULL, '1', '2', 'お酒飲みたーーーーい', '2022-09-02 06:44:17.000000'), 
+(NULL, '3', '1', 'windowsしか勝たん', '2022-09-02 06:44:17.000000'), 
+(NULL, '4', '1', 'カレー食べたい', '2022-09-02 06:44:17.000000'), 
+(NULL, '2', '1', 'プレゼン頑張りたい', '2022-09-02 06:44:17.000000'), 
+(NULL, '1', '1', 'マーケ曲調です', '2022-09-02 06:44:17.000000');
+
+
+DROP TABLE IF EXISTS benches;
+CREATE TABLE `benches` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL,
+  `user_id` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `benches` (`id`, `post_id`, `user_id`) VALUES 
+(NULL, '1', '2'), (NULL, '3', '1'), (NULL, '4', '5'), 
+(NULL, '4', '2'), (NULL, '3', '1'), (NULL, '2', '1');
+
+
+DROP TABLE IF EXISTS comments;
+CREATE TABLE `comments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `post_id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `conmment` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `comments` (`id`, `post_id`, `user_id`, `conmment`, `created_at`) 
+VALUES (NULL, '1', '2', '小野カン酒飲むな', '2022-09-02 06:48:25.000000'), 
+(NULL, '1', '3', 'おのかん酒飲むな！', '2022-09-02 06:48:25.000000'), 
+(NULL, '3', '5', '僕も食べたい！', '2022-09-02 06:48:25.000000'), 
+(NULL, '2', '1', 'やっぱmac book proだよね', '2022-09-02 06:48:25.000000');
+
+DROP TABLE IF EXISTS tags;
+CREATE TABLE `tags` (
+  `id` INT NOT NULL AUTO_INCREMENT , 
+  `tag_name` TEXT NOT NULL , 
+  `created_at` TIMESTAMP NOT NULL , 
+  PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS chat_room_user;
+  CREATE TABLE `sns`.`chat_room_user` (
+    `id` INT NOT NULL AUTO_INCREMENT , 
+    `user_id` INT NOT NULL , 
+    `chat_room_id` INT NOT NULL , 
+    PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS chat_room;
+  CREATE TABLE `sns`.`chat_room` (`id` INT NOT NULL AUTO_INCREMENT , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+
+DROP TABLE IF EXISTS chat_message;
+  CREATE TABLE `sns`.`chat_message` (
+    `id` INT NOT NULL AUTO_INCREMENT ,
+     `chat_room_id` INT NOT NULL ,
+      `user_id` INT NOT NULL , 
+      `message` TEXT NOT NULL , 
+      `created_at` TIMESTAMP NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

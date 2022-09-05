@@ -2,35 +2,88 @@
 header {
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100px;
-  background-color: rgb(166, 232, 234);
+  left: 23%;
+  width: 270px;
+  height: 100vh;
+  border-left: 1px solid gray;
+  /* background-color: rgb(166, 232, 234); */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
+  z-index: 2;
+  font-family: "Lobster", cursive;
 }
 header .header_logo {
   position: absolute;
-  top: 50%;
-  left: 5%;
-  transform: translateY(-50%);
-  width: 10%;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+}
+header .sun {
+  position: absolute;
+  font-size: 32px;
+  color: orange;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+header .moon {
+  position: absolute;
+  font-size: 32px;
+  color: rgba(226, 238, 59, 0.771);
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
 }
 header h2 {
   font-size: 28px;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+}
+
+header div {
+  position: absolute;
+  top:37%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+}
+
+header a {
+  position: absolute;
+  font-size: 32px;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: black;
+  font-size: 20px;
 }
 
 .main {
-  width: 60%;
-  margin: 150px auto;
+  width: 45%;
+  margin: 0px auto;
+  padding-left: 150px;
 }
 
 .post {
   padding: 20px 40px;
   border: solid 1px #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
-  margin-top: 50px;
+  /* margin-top: 50px; */
+  background-color: #fff;
+  position: relative;
+}
+.post:first-child {
+  margin-top: 0;
+}
+.post .count {
+  cursor: pointer;
 }
 .post-header {
   display: flex;
@@ -46,21 +99,39 @@ header h2 {
 }
 .post-header_title {
   font-size: 24px;
+  margin-left: 15px;
 }
 .post-header_title span {
   font-size: 16px;
   color: #ccc;
   margin-left: 5px;
 }
+
 .post-body {
-  margin: 16px 0;
+  margin: 0 110px 16px 110px;
 }
+
+.post-body p {
+  /* border: 1px solid gray;
+  padding: 10px;
+  border-radius: 10px; */
+  margin: 10px 0;
+}
+
+.post-body a {
+  color: black;
+}
+
+
 .post-items {
-  margin: 16px 0;
+  width: 60%;
+  margin: 0px auto 16px 110px;
+  /* padding: 0 30px; */
   display: flex;
   justify-content: space-between;
   font-size: 20px;
   margin-bottom: 0;
+  align-items: center;
 }
 .post-items span {
   font-size: 14px;
@@ -109,7 +180,7 @@ header h2 {
 .create {
   position: fixed;
   bottom: 5%;
-  right: 5%;
+  right: 15%;
   width: 80px;
   height: 80px;
   background-color: rgb(64, 206, 211);
@@ -119,7 +190,7 @@ header h2 {
   align-items: center;
   cursor: pointer;
 }
-.create i {
+.create p {
   color: #fff;
   font-size: 24px;
 }
@@ -139,11 +210,61 @@ header h2 {
   border-radius: 20px;
   text-align: center;
 }
-#profile .fa-circle-xmark {
+#profile .post-header_logo_wrapper {
+  width: 100%;
+  height: 80%;
+}
+#profile textarea {
+  width: 100%;
+  height: 80%;
+}
+#profile form {
+  width: 100%;
+  height: 100%;
+}
+#profile-text {
+  display: none;
+  z-index: 3;
+  padding: 40px;
+  border-radius: 20px;
+}
+#profile-text .post-header_logo_wrapper {
+  display: flex;
+  -moz-column-count: 2;
+       column-count: 2;
+  -moz-column-gap: 10px;
+       column-gap: 10px;
+  width: 100%;
+  height: 100%;
+}
+#profile-text-text {
+  width: 80%;
+  padding: 4px;
+}
+#profile-text-text textarea {
+  width: 80%;
+  height: 100%;
+  padding: 4px;
+}
+#profile-text-text .hashTag_wrapper {
+  width: 103.5px;
+  margin-left: auto;
+}
+#profile-text-text .hashTag_wrapper .hashTag {
+  height: 30px;
+  padding: 4px;
+}
+#profile-text-button {
+  background-color: rgba(255, 166, 0, 0.72);
+  color: #fff;
+  margin-left: 180px;
+  padding: 20px 40px;
+  border-radius: 20px;
+}
+#profile-text .fa-circle-xmark {
   position: absolute;
   top: 3%;
   right: 3%;
-  cursor: pointer;
 }
 
 .soft {
@@ -208,25 +329,37 @@ header h2 {
   -moz-column-gap: 20px;
        column-gap: 20px;
 }
+.wrapper select {
+  width: 100%;
+  text-align: center;
+}
 
 .side {
-  width: 30%;
-  margin-top: 300px;
+  /* width: 26%;
+  justify-content: flex-end;
+  display: flex; */
+  /* margin-top: 300px; */
   position: fixed;
+  top: 30%;
+  right: 21%;
 }
 
 .icon-wrapper {
+  z-index: 100000;
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 20px;
 }
 .icon-wrapper i {
+  color: black;
   font-size: 30px;
 }
 
 .icon-items {
   margin: 20px auto;
   cursor: pointer;
+  color: rgb(166, 232, 234);
 }
 
 .edit-wrapper {
@@ -268,8 +401,8 @@ header h2 {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
+  width: 50vw;
+  height: 50vh;
   background-color: #fff;
   display: none;
   opacity: 0%;
@@ -278,40 +411,22 @@ header h2 {
   border-radius: 20px;
   text-align: center;
 }
-.modal-form {
+.modal form {
   width: 100%;
   height: 100%;
-}
-.modal-form .post-header_logo_wrapper {
-  display: flex;
-  -moz-column-count: 2;
-       column-count: 2;
-  -moz-column-gap: 10px;
-       column-gap: 10px;
-  width: 100%;
-  height: 80%;
 }
 .modal-text {
-  width: 80%;
-  height: 100%;
-  text-align: left;
+  display: flex;
+  height: 80%;
 }
 .modal-text textarea {
-  width: 100%;
+  width: 80%;
   height: 100%;
   padding: 12px;
-}
-.modal-text .hashTag_wrapper {
-  width: 103.5px;
-  margin-left: auto;
-}
-.modal-text .hashTag_wrapper .hashTag {
-  padding: 4px;
 }
 .modal-button {
   background-color: rgba(255, 166, 0, 0.72);
   color: #fff;
-  margin-top: 30px;
   padding: 20px 40px;
   border-radius: 20px;
 }
@@ -319,6 +434,8 @@ header h2 {
   position: absolute;
   top: 3%;
   right: 3%;
+  width: 50px;
+  height: 50px;
   cursor: pointer;
 }
 
@@ -363,4 +480,197 @@ header h2 {
 .benchOn {
   color: orange !important;
 }
-/*# sourceMappingURL=style.css.map */
+
+.darkMode {
+  background-color: #2e2b2b;
+  color: #fff !important;
+}
+
+.closed {
+  position: absolute;
+  top: 5%;
+  left: 90%;
+}
+
+.benchModal {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  z-index: 3;
+}
+.benchModal > div {
+  margin: 20px 0;
+}
+
+.trash {
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  width: 20px;
+  height: 20px;
+}
+
+.dm {
+  text-align: center;
+  margin: 100px auto;
+}
+.dm-list {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  gap: 20px;
+  font-size: 20px;
+}
+.dm-list img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.message {
+  position: fixed;
+  bottom: 0%;
+  left: 30%;
+  width: 60%;
+  height: calc(100% - 100px);
+  padding: 0 12px;
+  background-color: rgb(135, 202, 225);
+}
+.message-body {
+  display: flex;
+  align-items: flex-end;
+  margin: 20px auto;
+}
+.message-body_image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.message-body_area {
+  height: 50%;
+  display: block;
+  background-color: #fff;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+.message-send {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-color: #fff;
+}
+.message-send form {
+  width: 100%;
+  height: 100%;
+}
+.message-send textarea {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: solid 3px #ccc;
+}
+.message-send input {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+.hashTag {
+  color: rgb(29, 155, 240);
+}
+
+.open-btn1 {
+  background: url("https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/7-2-3/img/icon_search.svg") no-repeat 15px center; /*虫眼鏡アイコンを背景に表示*/
+  background-size: 20px 20px;
+  width: 50px;
+  height: 50px;
+  cursor: pointer; /*カーソルを指マークに*/
+}
+
+/*クリック後、JSでボタンに btnactive クラスが付与された後の見た目*/
+.open-btn1.btnactive {
+  background: url("https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/7-2-3/img/icon_close.svg") no-repeat 15px center; /*閉じるアイコンを背景に表示*/
+  background-size: 18px 18px;
+}
+
+/*========= 検索窓の設定 ===============*/
+/*==検索窓背景のエリア*/
+#search-wrap {
+  position: absolute; /*絶対配置にして*/
+  top: 150px;
+  right: 20px;
+  z-index: -1; /*最背面に設定*/
+  opacity: 0; /*透過を0に*/
+  width: 0; /*横幅は0に*/
+  transition: all 0.4s; /*transitionを使ってスムースに現れる*/
+  border-radius: 5px;
+}
+
+/*ボタンクリック後、JSで#search-wrapに panelactive クラスが付与された後の見た目*/
+#search-wrap.panelactive {
+  opacity: 1; /*不透明に変更*/
+  z-index: 3; /*全面に出現*/
+  width: 280px;
+  padding: 20px;
+  top: 60px;
+  background: #fff;
+}
+
+/*==検索窓*/
+#search-wrap #searchform {
+  display: none; /*検索窓は、はじめ非表示*/
+}
+
+/*ボタンクリック後、JSで#search-wrapに panelactive クラスが付与された後*/
+#search-wrap.panelactive #searchform {
+  display: block; /*検索窓を表示*/
+}
+
+/*==検索フォームの設定*/
+/*==テキスト入力とボタンinput共通設定*/
+#search-wrap input {
+  -webkit-appearance: none; /*SafariやChromeのデフォルトの設定を無効*/
+  outline: none;
+  cursor: pointer; /*カーソルを指マークに*/
+  color: #666;
+}
+
+/*テキスト入力input設定*/
+#search-wrap input[type=text] {
+  width: 100%;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  transition: all 0.5s;
+  letter-spacing: 0.05em;
+  height: 46px;
+  padding: 10px;
+}
+
+/*テキスト入力inputにフォーカスされたら*/
+#search-wrap input[type=text]:focus {
+  background: #eee; /*背景色を付ける*/
+}
+
+/*ボタンinput設定*/
+#search-wrap input[type=submit] {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  background: url("https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/7-2-3/img/icon_search.svg") no-repeat right; /*虫眼鏡アイコンを背景に表示*/
+  background-size: 20px 20px;
+  width: 30px;
+  height: 60px;
+}/*# sourceMappingURL=style.css.map */

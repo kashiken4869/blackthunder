@@ -1,45 +1,32 @@
 <?php
-function check_favolite_duplicate($user_id, $post_id)
+date_default_timezone_set('Asia/Tokyo'); //日本のタイムゾーンに設定
+
+require(dirname(__FILE__) . "/db_connect.php");
+$stmt = $db->prepare("SELECT * FROM posts where post_id = 2");
+$stmt->execute();
+$posts = $stmt->fetch();
+
+
+$from = strtotime($posts['created_at']);  // 2016年元旦 (0時0分0秒)
+$to   = strtotime("now");         // 現在日時
+echo time_diff($from, $to);
+// 結果：32days 12:34:56
+
+//***************************************
+// 日時の差を計算
+//***************************************
+function time_diff($time_from, $time_to) 
 {
-  $dsn = 'mysql:host=db;dbname=sns;charset=utf8;';
-  $user = "root";
-  $password = 'password';
-  $dbh = new PDO($dsn, $user, $password);
-  $sql = "SELECT *
-            FROM benches
-            WHERE user_id = :user_id AND post_id = :post_id";
-  $stmt = $dbh->prepare($sql);
-  $stmt->execute(array(
-    ':user_id' => $user_id,
-    ':post_id' => $post_id
-  ));
-  $favorite = $stmt->fetch();
-  return $favorite;
+    // 日時差を秒数で取得
+    $dif = $time_to - $time_from;
+    //分単位
+    // 時間単位の差
+    $dif_hour= floor( $dif / 3600 );
+    // 日付単位の差
+    $dif_days = floor((strtotime(date("Y-m-d", $dif))) / 86400);
+    if($dif_days > 0){
+        return "{$dif_days}日";
+    }else{
+        return "{$dif_hour}h";
+    }
 }
-?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
-
-<body>
-  <form class="favorite_count" action="#" method="post">
-    <input type="hidden" name="post_id">
-    <button type="button" name="favorite" class="favorite_btn">
-      <?php if (!check_favolite_duplicate(1, 2)) : ?>
-        いいね
-      <?php else : ?>
-        いいね解除
-      <?php endif; ?>
-    </button>
-  </form>
-  <script src=" https://code.jquery.com/jquery-3.4.1.min.js "></script>
-  <script src="./js/test.js"></script>
-</body>
-
-</html>

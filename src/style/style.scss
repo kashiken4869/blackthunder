@@ -16,6 +16,8 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 2;
+  font-family: 'Lobster', cursive;
   & .header_logo {
     position: absolute;
     top: 50%;
@@ -23,8 +25,25 @@ header {
     transform: translateY(-50%);
     width: 10%;
   }
+  & .sun{
+    position: absolute;
+    font-size: 32px;
+    color: orange;
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+  }
+  & .moon{
+    position: absolute;
+    font-size: 32px;
+    color: rgba(226, 238, 59, 0.771);
+    top: 50%;
+    right: 5%;
+    transform: translateY(-50%);
+    display: none;
+  }
   & h2 {
-    font-size: 28px;
+    font-size: 40px;
   }
 }
 
@@ -38,6 +57,14 @@ header {
   border: solid 1px #ccc;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.305);
   margin-top: $section_margin;
+  background-color: #fff;
+  position: relative;
+  &:first-child{
+    margin-top: 0;
+  }
+  & .count{
+    cursor: pointer;
+  }
   &-header {
     display: flex;
     align-items: center;
@@ -66,6 +93,7 @@ header {
     justify-content: space-between;
     font-size: 20px;
     margin-bottom: 0;
+    align-items: center;
     & span{
       font-size: 14px;
       margin-left: 4px;
@@ -143,14 +171,65 @@ header {
   padding: 40px;
   border-radius: 20px;
   text-align: center;
-  .fa-circle-xmark{
+  & .post-header_logo_wrapper{
+    width: 100%;
+    height: 80%;
+  }
+  & textarea{
+      width: 100%;
+      // margin: 0 auto;
+      height: 80%;
+  }
+  & form{
+    width: 100%;
+    height: 100%;
+  }
+  &-text{
+  // opacity: 0;
+  display: none;
+  z-index: 3;
+  padding: 40px;
+  border-radius: 20px;
+  // text-align: center;
+  .post-header_logo_wrapper{
+    display: flex;
+    column-count: 2;
+    column-gap: 10px;
+    width: 100%;
+    height: 100%;
+  }
+  &-text{
+    width: 80%;
+    padding: 4px;
+    & textarea{
+      width: 80%;
+      height: 100%;
+      padding: 4px;
+    }
+    .hashTag_wrapper{
+      width: 103.5px;
+      margin-left: auto;
+      .hashTag{
+        height: 30px;
+        padding: 4px;
+      }
+    }
+  }
+  &-button{
+    background-color: rgba(255, 166, 0, 0.72);
+    color: #fff;
+    margin-left: 180px;
+    padding: 20px 40px;
+    border-radius: 20px;
+  }
+  & .fa-circle-xmark{
     position: absolute;
     top: 3%;
     right: 3%;
     // width: 50px;
     // height: 50px;
-    cursor: pointer;
   }
+}
 }
 .soft{
   @include mixin.animation($name:soft,$duration:1.0s);
@@ -185,6 +264,10 @@ header {
   display: flex;
   column-count: 2;
   column-gap: 20px;
+  & select{
+    width: 100%;
+    text-align: center;
+  }
 }
 .side{
   width: 30%;
@@ -193,6 +276,7 @@ header {
 }
 .icon-wrapper{
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 20px;
   i{
@@ -202,6 +286,7 @@ header {
 .icon-items{
   margin: 20px auto;
   cursor : pointer;
+  color: rgb(166, 232, 234);
 }
 .edit-wrapper{
   background-color: #D9D9D9;
@@ -239,8 +324,8 @@ header {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 600px;
-  height: 400px;
+  width: 50vw;
+  height: 50vh;
   background-color: #fff;
   display: none;
   opacity: 0%;
@@ -248,39 +333,22 @@ header {
   padding: 40px;
   border-radius: 20px;
   text-align: center;
-  &-form{
+  & form{
     width: 100%;
     height: 100%;
-    .post-header_logo_wrapper{
-      display: flex;
-      column-count: 2;
-      column-gap: 10px;
-      width: 100%;
-      height: 80%;
-    }
   }
   &-text{
-    // display: flex;
-    width: 80%;
-    height: 100%;
-    text-align: left;
+    display: flex;
+    height: 80%;
     & textarea{
-      width: 100%;
+      width: 80%;
       height: 100%;
       padding: 12px;
-    }
-    & .hashTag_wrapper{
-      width: 103.5px;
-      margin-left: auto;
-      & .hashTag{
-        padding: 4px;
-      }
     }
   }
   &-button{
     background-color: rgba(255, 166, 0, 0.72);
     color: #fff;
-    margin-top: 30px;
     padding: 20px 40px;
     border-radius: 20px;
   }
@@ -288,8 +356,8 @@ header {
     position: absolute;
     top: 3%;
     right: 3%;
-    // width: 50px;
-    // height: 50px;
+    width: 50px;
+    height: 50px;
     cursor: pointer;
   }
 }
@@ -320,4 +388,202 @@ header {
 
 .benchOn{
   color: orange!important;
+}
+
+.darkMode{
+  background-color: #2e2b2b;
+  color: #fff;
+  // box-shadow: 3px 3px 5px #fff;
+}
+
+.closed{
+  position: absolute;
+  top: 5%;
+  left: 90%;
+}
+
+
+.benchModal{
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50vw;
+  height: 50vh;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  z-index: 3;
+  & > div{
+    margin: 20px 0;
+  }
+}
+
+.trash{
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  width: 20px;
+  height: 20px;
+}
+
+.dm{
+  text-align: center;
+  margin: $header_height auto;
+  &-list{
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+    gap: 20px;
+    font-size: 20px;
+    & img{
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  }
+}
+
+
+.message{
+  position: fixed;
+  bottom: 0%;
+  left: 30%;
+  width: 60%;
+  height: calc(100% - $header_height);
+  padding: 0 12px;
+  background-color: rgb(135, 202, 225);
+  &-body{
+    display: flex;
+    align-items: flex-end;
+    margin: 20px auto;
+    &_image{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    &_area{
+      height: 50%;
+      display: block;
+      background-color: #fff;
+      padding: 4px 12px;
+      border-radius: 8px;
+    }
+  }
+  &-send{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    background-color: #fff;
+    & form{
+      width: 100%;
+      height: 100%;      
+    }
+    & textarea{
+      width: 100%;
+      height: 100%;
+      padding: 12px;
+      border: solid 3px #ccc;
+    }
+    & input{
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+    }
+  }
+}
+
+.hashTag{
+  color: rgb(29, 155, 240);
+}
+
+.open-btn1{
+  background:url("https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/7-2-3/img/icon_search.svg") no-repeat 15px center;/*虫眼鏡アイコンを背景に表示*/
+  background-size: 20px 20px;
+  width:50px;
+  height:50px;
+  cursor: pointer;/*カーソルを指マークに*/
+}
+
+/*クリック後、JSでボタンに btnactive クラスが付与された後の見た目*/
+.open-btn1.btnactive{
+  background:url("https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/7-2-3/img/icon_close.svg") no-repeat 15px center;/*閉じるアイコンを背景に表示*/
+  background-size: 18px 18px;
+}
+
+/*========= 検索窓の設定 ===============*/
+
+/*==検索窓背景のエリア*/
+
+#search-wrap{
+    position:absolute;/*絶対配置にして*/
+  top:150px;
+    right:20px;
+  z-index: -1;/*最背面に設定*/
+  opacity: 0;/*透過を0に*/
+  width:0;/*横幅は0に*/
+  transition: all 0.4s;/*transitionを使ってスムースに現れる*/
+  border-radius: 5px;
+}
+
+/*ボタンクリック後、JSで#search-wrapに panelactive クラスが付与された後の見た目*/
+#search-wrap.panelactive{
+  opacity: 1;/*不透明に変更*/
+  z-index: 3;/*全面に出現*/
+  width:280px;
+  padding:20px;
+  top:60px;
+  background:#fff;
+}
+
+/*==検索窓*/
+#search-wrap #searchform{
+  display: none;/*検索窓は、はじめ非表示*/
+}
+
+/*ボタンクリック後、JSで#search-wrapに panelactive クラスが付与された後*/
+#search-wrap.panelactive #searchform{
+  display: block;/*検索窓を表示*/
+}
+
+/*==検索フォームの設定*/
+
+/*==テキスト入力とボタンinput共通設定*/
+#search-wrap input{
+  -webkit-appearance:none;/*SafariやChromeのデフォルトの設定を無効*/
+  outline: none;
+  cursor: pointer;/*カーソルを指マークに*/
+  color: #666;
+}
+
+/*テキスト入力input設定*/
+ #search-wrap input[type="text"] {
+  width: 100%;
+  border: none;
+  border-bottom:2px solid #ccc;
+  transition: all 0.5s;
+  letter-spacing: 0.05em;
+    height:46px;
+  padding: 10px;
+}
+
+/*テキスト入力inputにフォーカスされたら*/
+ #search-wrap input[type="text"]:focus {
+  background:#eee;/*背景色を付ける*/
+}
+
+/*ボタンinput設定*/
+ #search-wrap input[type="submit"] {
+  position: absolute;
+    top:10px;
+  right:30px;
+  background:url("https://coco-factory.jp/ugokuweb/wp-content/themes/ugokuweb/data/7-2-3/img/icon_search.svg") no-repeat right;/*虫眼鏡アイコンを背景に表示*/
+  background-size: 20px 20px;
+  width:30px;
+  height: 60px;
 }
