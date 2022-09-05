@@ -9,11 +9,36 @@ if (!isset($_SESSION["user_id"]) || !isset($_SESSION['login'])) {
     exit();
 }
 
+function time_diff($time_from, $time_to)
+{
+    // 日時差を秒数で取得
+    $dif = $time_to - $time_from;
+    //分単位
+    $dif_min = floor($dif / 60);
+    // 時間単位の差
+    $dif_hour = floor($dif / 3600);
+    // 日付単位の差
+    $dif_days = round((strtotime(date("Y-m-d", $dif))) / 86400);
+    if ($dif_days > 0) {
+        return "{$dif_days}日";
+    } elseif ($dif_hour > 0) {
+        return "{$dif_hour}h";
+    } else {
+        return "{$dif_min}m";
+    }
+}
 
+$tag = $_POST['tag'];
+if ($tag == '選択してください' || $tag == 'すべて' || $tag == '') {
+    $stmt = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id order by posts.created_at desc");
+    $stmt->execute();
+    $posts = $stmt->fetchAll();
+} else {
+    $stmt = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id where posts.tag_id = '$tag' order by posts.created_at desc");
+    $stmt->execute();
+    $posts = $stmt->fetchAll();
+}
 //すべての投稿取得
-$stmt = $db->prepare("SELECT * FROM users JOIN posts ON users.id = posts.user_id");
-$stmt->execute();
-$posts = $stmt->fetchAll();
 
 function check_favolite_duplicate($user_id, $post_id)
 {
@@ -41,8 +66,6 @@ function check_favolite_duplicate($user_id, $post_id)
 }
 ?>
 
-
-
 <body>
     <div class="main">
     <?php
@@ -65,8 +88,29 @@ require('./parts/_header.php');
             $stmt_user = $db->prepare("SELECT * from benches INNER JOIN users on benches.user_id = users.id where post_id = '$post_id'");
             $stmt_user->execute();
             $benchUsers = $stmt_user->fetchAll();
+
+            //時間取得
+            date_default_timezone_set('Asia/Tokyo'); //日本のタイムゾーンに設定
+            $stmt = $db->prepare("SELECT * FROM posts where post_id = '$post_id'");
+            $stmt->execute();
+            $posts = $stmt->fetch();
+            $from = strtotime($posts['created_at']);  // 2016年元旦 (0時0分0秒)
+            $to   = strtotime("now");         // 現在日時
+            // 結果：32days 12:34:56
+            //***************************************
+            // 日時の差を計算
+            //**************************************
+
+            //タグ表示
+            $stmt = $db->prepare("SELECT * FROM posts INNER JOIN tags on posts.tag_id = tags.id where post_id = '$post_id'");
+            $stmt->execute();
+            $tag = $stmt->fetch();
         ?>
             <section class="post">
+                <form action="store.php" method="post">
+                    <input type="hidden" name="delete" value="<?= $post_id; ?>">
+                    <input type="image" src="./img/iconmonstr-trash-can-9-240.png" class="trash">
+                </form>
                 <div class="benchModal">
                     <p>ベンチに行きたいユーザー</p>
                     <?php foreach ($benchUsers as $benchUser) : ?>
@@ -78,11 +122,15 @@ require('./parts/_header.php');
                 </div>
                 <div class="post-header">
                     <img src="./img/<?= $post['image']; ?>" alt="" class="post-header_logo">
-                    <p class="post-header_title"><?= $post['name']; ?><span>40m</span></p>
+                    <p class="post-header_title"><?= $post['name']; ?><span><?= time_diff($from, $to); ?></span></p>
                 </div>
                 <div class="post-body">
                     <p><?= $post['content']; ?></p>
-                    <a href="#">#Good&New</a>
+                    <form action="index.php" method="post">
+                        <input type="hidden" name="tag" value="<?= $tag['id']; ?>">
+                        <input type="submit" value="#<?= $tag['tag_name']; ?>" class="hashTag">
+                    </form>
+                    <!-- <a href="index.php">#<?= $tag['tag_name']; ?></a> -->
                 </div>
                 <div class="post-items">
                     <form action="comment.php" method="post">
@@ -126,25 +174,81 @@ require('./parts/_header.php');
                 <button class="modal-button">保存する</button>
             </form>
         </div>
+        <div class="dm"></div>
     </div>
     <!-- 要素としては残しておきつつ隠す -->
     <div class="create">
-        <p class="fa-solid fa-plus">叫ぶ</p>
+        <i class="fa-solid fa-plus">叫ぶ</i>
     </div>
     <div class="modal">
         <i class="fa-solid fa-circle-xmark close"></i>
-        <div class="modal-text">
-            <img src="./img/<?= $_SESSION['image']; ?>" alt="" class="post-header_logo">
-            <textarea placeholder="ここに記入してください"></textarea>
-        </div>
-        <button class="modal-button">記録・投稿</button>
+        <form action="store.php" method="post">
+            <div class="modal-text">
+                <img src="./img/<?= $_SESSION['image']; ?>" alt="" class="post-header_logo">
+                <textarea placeholder="ここに記入してください" name="text"></textarea>
+            </div>
+            <select name="tag_create" id="">
+                <option value="選択肢してください" selected>選択してください</option>
+                <?php foreach ($tags as $tag) : ?>
+                    <option value="<?= $tag['id'] ?>"><?= $tag['tag_name'] ?></option>
+                <?php endforeach; ?>
+            </select>
+            <button class="modal-button">記録・投稿</button>
+        </form>
     </div>
     <div class="blackFilm"></div>
     <?php
-
     require('./parts/_footer.php');
-
     ?>
+    <script>
+        let selection;
+        if ('<?= $_POST["tag"]; ?>' == 'すべて') {
+            selection += `<option value="すべて" selected>すべて</option>`
+        } else {
+            selection += `<option value="すべて">すべて</option>`
+        }
+        <?php foreach ($tags as $tag) : ?>
+            if ('<?= $_POST["tag"]; ?>' == '<?= $tag['id']; ?>') {
+                selection += `<option value="<?= $tag['id'] ?>" selected><?= $tag['tag_name'] ?></option>`
+            } else {
+                selection += `<option value="<?= $tag['id'] ?>"><?= $tag['tag_name'] ?></option>`
+            }
+        <?php endforeach; ?>
+        document.getElementById('tag').insertAdjacentHTML("beforeend", selection);
+
+
+        $(function() {
+            $(document).on('input', '#searchform', function(e) {
+                e.preventDefault();
+                let name = $('#search-text').val();
+                $.ajax({
+                    type: 'POST',
+                    url: 'searchData.php',
+                    dataType: 'json',
+                    data: {
+                        search_name: name
+                    }
+                }).done(function(data) {
+                    // $(e.target).toggleClass("benchOn");
+                    $('.post').hide();
+                    if(data !== null){
+                        $('.dm-list').remove();
+                        $(".dm").append(`<div class="dm-list">
+                            <img src="./img/${data.image}">
+                            <form action="account.php" method="post">
+                                <input type="hidden" name="search_id" value="${data.id}">
+                                <input type="submit" value="${data.name}">
+                            </form>
+                        </div>`);
+                        // $('.dm').append(`<img src="./img/${data.image}" class="image">`);
+                    }
+                    console.log(data.name)
+                }).fail(function() {
+                    console.log("aaaa")
+                });
+            });
+        })
+    </script>
 </body>
 
 </html>
