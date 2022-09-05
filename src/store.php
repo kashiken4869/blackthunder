@@ -19,6 +19,15 @@ if(isset($_POST['comment'])){
     $stmt->execute();
     header('Location: index.php');
     exit();
+}elseif(isset($_POST['message'])){
+    $message = $_POST['message'];
+    $room_id = $_POST['room_id'];
+    $send_id = $_POST['send_id'];
+    $_SESSION['partner_id'] = $_POST['partner_id'];
+    $stmt = $db->prepare("insert into messages(room_id,send_user_id,text,created_at) value('$room_id','$send_id','$message','$date')");
+    $stmt->execute();
+    header('Location: message.php');
+    exit();
 }else{
     $text = $_POST['text'];
     $tag = $_POST['tag_create'];

@@ -144,7 +144,11 @@ require('./parts/_header.php');
                 </div>
                 <div class="post-body">
                     <p><?= $post['content']; ?></p>
-                    <a href="#">#<?= $tag['tag_name'] ;?></a>
+                    <form action="index.php" method="post">
+                        <input type="hidden" name="tag" value="<?= $tag['id'] ;?>">
+                        <input type="submit" value="#<?= $tag['tag_name'] ;?>" class="hashTag">
+                    </form>
+                    <!-- <a href="index.php">#<?= $tag['tag_name'] ;?></a> -->
                 </div>
                 <div class="post-items">
                     <form action="comment.php" method="post">

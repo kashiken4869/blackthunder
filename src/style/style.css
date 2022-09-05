@@ -299,6 +299,7 @@ header h2 {
 
 .icon-wrapper {
   display: flex;
+  align-items: center;
   flex-direction: column;
   padding: 20px;
 }
@@ -465,4 +466,79 @@ header h2 {
   left: 90%;
   width: 15px;
   height: 15px;
+}
+
+.dm {
+  text-align: center;
+  margin: 100px auto;
+}
+.dm-list {
+  display: flex;
+  align-items: center;
+  margin: 20px 0;
+  gap: 20px;
+  font-size: 20px;
+}
+.dm-list img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.message {
+  position: fixed;
+  bottom: 0%;
+  left: 30%;
+  width: 60%;
+  height: calc(100% - 100px);
+  padding: 0 12px;
+  background-color: rgb(135, 202, 225);
+}
+.message-body {
+  display: flex;
+  align-items: flex-end;
+  margin: 20px auto;
+}
+.message-body_image {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.message-body_area {
+  height: 50%;
+  display: block;
+  background-color: #fff;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+.message-send {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 20%;
+  background-color: #fff;
+}
+.message-send form {
+  width: 100%;
+  height: 100%;
+}
+.message-send textarea {
+  width: 100%;
+  height: 100%;
+  padding: 12px;
+  border: solid 3px #ccc;
+}
+.message-send input {
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+}
+
+.hashTag {
+  color: rgb(29, 155, 240);
 }/*# sourceMappingURL=style.css.map */

@@ -124,18 +124,18 @@ $(function(){
     });
   });
 
-  const user = document.getElementById('user');
-  const bench = document.getElementById('bench');
-  const home = document.getElementById('home');
-  user.addEventListener("click",function(){ //個人のページに飛ぶ
-      window.location.href = './account.php';
-  })
-  bench.addEventListener("click",function(){ //ベンチページに飛ぶ
-      window.location.href = './bench.php';
-  })
-  home.addEventListener("click",function(){ //TLページに飛ぶ
-      window.location.href = './index.php';
-  })
+//   const user = document.getElementById('user');
+//   const bench = document.getElementById('bench');
+//   const home = document.getElementById('home');
+//   user.addEventListener("click",function(){ //個人のページに飛ぶ
+//       window.location.href = './account.php';
+//   })
+//   bench.addEventListener("click",function(){ //ベンチページに飛ぶ
+//       window.location.href = './bench.php';
+//   })
+//   home.addEventListener("click",function(){ //TLページに飛ぶ
+//       window.location.href = './index.php';
+//   })
 
 
 const sun = document.querySelector('.sun');

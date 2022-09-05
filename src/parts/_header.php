@@ -13,9 +13,9 @@ try {
     echo '接続失敗: ' . $e->getMessage();
     exit();
 }
-$id = $_SESSION['user_id'];
+$user_id = $_SESSION['user_id'];
 
-$stmt = $db->prepare("SELECT * FROM users where id = '$id'");
+$stmt = $db->prepare("SELECT * FROM users where id = '$user_id'");
 $stmt->execute();
 $image = $stmt->fetch();
 
@@ -54,9 +54,10 @@ $tags = $stmt->fetchAll();
                     <select name="tag" id="tag" onchange="submit(this.form)">
                     </select>
                 </form>
-                <i id="home" class="fa-solid fa-house icon-items"></i>
-                <i id="bench" class="fa-solid fa-couch icon-items"></i>
-                <i id="user" class="fa-solid fa-user icon-items"></i>
-                <img src=./img/<?= $image['image'] ?> alt="" class="post-header_logo icon-items">
+                <a href="index.php"><i id="home" class="fa-solid fa-house icon-items"></i></a>
+                <a href="bench.php"><i id="bench" class="fa-solid fa-couch icon-items"></i></a>
+                <!-- <i id="user" class="fa-solid fa-user icon-items"></i> -->
+                <a href="dm.php"><i class="fa-solid fa-envelope icon-items"></i></a>
+                <a href="account.php"><img src=./img/<?= $image['image'] ?> alt="" class="post-header_logo icon-items"></a>
             </div>
         </div>
