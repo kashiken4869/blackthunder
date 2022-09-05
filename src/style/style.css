@@ -496,6 +496,10 @@ header h2 {
   padding: 0 12px;
   background-color: rgb(135, 202, 225);
 }
+.message-main {
+  height: 80%;
+  overflow-y: scroll;
+}
 .message-body {
   display: flex;
   align-items: flex-end;

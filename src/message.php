@@ -24,6 +24,7 @@ $messages = $stmt->fetchAll();
 require('./parts/_header.php');
 ?>
 <div class="message">
+    <div class="message-main">
     <?php foreach ($messages as $message) : 
         if($user_id == $message['user_id']){
             if($user_id == $message['send_user_id']){
@@ -59,6 +60,7 @@ require('./parts/_header.php');
             <?php endif; ?>
         </style>
     <?php endforeach; ?>
+    </div>
     <div class="message-send">
         <form action="store.php" method="post">
             <textarea name="message" id="" placeholder="ここに記入してください"></textarea>
