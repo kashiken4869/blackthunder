@@ -171,3 +171,14 @@ input[type="submit"] value :hover {
     color: black;
 }
 
+.done {
+    width: 600px;
+    margin: 100px auto;
+    text-align: center;
+}
+
+.to_login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

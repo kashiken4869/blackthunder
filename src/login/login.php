@@ -23,6 +23,7 @@ if (isset($_POST["submit"])) {
             session_regenerate_id(TRUE); //セッションidを再発行
             $_SESSION["user_id"] = $result["id"];
             $_SESSION['name'] = $result['name'];
+            $_SESSION['img'] = $result['img'];
             $_SESSION["login"] = $_POST['email']; //セッションにログイン情報を登録
             header('Location: ../index.php');
         } else {
@@ -69,13 +70,13 @@ if (isset($_POST["submit"])) {
             <a class="new_person" href="signup.php">新規の方はこちら</a>
         </form>
     </div>
-    <div class="inquiry">
+    <!-- <div class="inquiry">
         <p>お問い合わせは下記の連絡先にお願いいたします。
             <br>craft運営 boozer株式会社事務局
             <br>TEL:080-3434-2435
             <br>Email:craft@boozer.com
         </p>
-    </div>
+    </div> -->
 </body>
 
 </html>  

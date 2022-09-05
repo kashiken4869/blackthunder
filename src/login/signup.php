@@ -13,11 +13,14 @@ $stmt = $db->prepare("INSERT INTO users (email, login_pass) VALUES (:email, :log
 
 $stmt->execute(array(':email' => $_POST['email'],':login_pass' => password_hash($_POST['pass'], PASSWORD_DEFAULT)));
 
-
 }catch(Exception $e){
     echo "データベースの接続に失敗しました：";
     echo $e->getMessage();
     die();
+}
+
+if($_POST['email'] != null) {
+    header("Location: signup_done.php"); 
 }
 
 ?>
@@ -35,11 +38,11 @@ $stmt->execute(array(':email' => $_POST['email'],':login_pass' => password_hash(
     <h1>
         <p><span>MidNight</span>by blackthunder</p>
     </h1>
-    <p class="agent_login">MidNight新規登録画面</p>
+    <p class="agent_login">MidNightアカウント作成画面</p>
     </header>
         <div class="agent_login_info">
 
-    <h2 class="agent_login_title"> 会員登録</h1>
+    <h2 class="agent_login_title">アカウント作成</h2>
     <form action="" method="post">
         <p>
             <label>メールアドレス：</label>
@@ -51,7 +54,7 @@ $stmt->execute(array(':email' => $_POST['email'],':login_pass' => password_hash(
             <input type="password" name="pass">
         </p>
 
-        <input type="submit" name="submit" formaction="login.php" value="会員登録する">
+        <input type="submit" name="submit" value="会員登録する">
     </form>
         </div>
 </body>

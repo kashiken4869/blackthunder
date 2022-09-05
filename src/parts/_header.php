@@ -38,7 +38,11 @@ $image = $stmt->fetch();
         <div class="icon-wrapper">
             <i id="home" class="fa-solid fa-house icon-items"></i>
             <i id="bench" class="fa-solid fa-couch icon-items"></i>
-            <img id="user" class="fa-solid fa-user icon-items post-header_logo icon-items" src=./img/<?= $image['image'] ?> alt="">
+            <?php if ($image['image'] != null): ?>
+            <img id="user" class="fa-solid fa-user icon-items post-header_logo" src=./img/<?= $image['image'] ?> alt="">
+            <?php else: ?>
+            <img id="user" class="fa-solid fa-user icon-items post-header_logo" src="./img/ストイック.jpeg" alt="">
+            <?php endif ?>
         </div>
         <a href="../login/logout.php">ログアウト</a>
         <i class="fa-solid fa-sun sun"></i>

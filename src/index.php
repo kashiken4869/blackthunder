@@ -4,7 +4,7 @@ require($_SERVER['DOCUMENT_ROOT'] . "/db_connect.php");
 session_start();
 
 //ログインされていない場合は強制的にログインページにリダイレクト
-if (!isset($_SESSION["user_id"]) || !isset($_SESSION['name'])) {
+if (!isset($_SESSION["user_id"]) || !isset($_SESSION['login'])) {
     header("Location: login/login.php");
     exit();
 }
