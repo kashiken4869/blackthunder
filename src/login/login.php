@@ -28,7 +28,6 @@ if (isset($_POST["submit"])) {
             header('Location: ../index.php');
         } else {
             $msg = 'メールアドレスもしくはパスワードが間違っています。';
-
         }
     } catch (PDOException $e) {
         echo "もう一回";
