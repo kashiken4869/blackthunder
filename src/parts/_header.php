@@ -20,7 +20,6 @@ $stmt = $db->prepare("SELECT * FROM tags");
 $stmt->execute();
 $tags = $stmt->fetchAll();
 
-echo $user_id;
 ?>
 
 <!DOCTYPE html>
