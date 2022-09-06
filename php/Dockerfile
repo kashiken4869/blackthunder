@@ -1,4 +1,4 @@
-FROM php:8.1-fpm
+FROM php:7.4.7-fpm
 RUN docker-php-ext-install pdo_mysql
 
 # FROM golang:1.15 AS builder

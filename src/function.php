@@ -185,9 +185,9 @@ function getErrMsg($key)
 function dbConnect()
 {
 	// DBへの接続準備
-	$dsn = "mysql:dbname=PostOnceADay;host=localhost;charset=utf8";
-	$user = ' posse_user';
-	$password = ' posse_user';
+	$dsn = "mysql:host=db;dbname=sns;charset=utf8mb4;";
+	$user = 'posse_user';
+	$password = 'posse_user';
 	$options = array(
 		// SQL実行失敗時にはエラーコードのみ設定
 		PDO::ATTR_ERRMODE => PDO::ERRMODE_SILENT,
